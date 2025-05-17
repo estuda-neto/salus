@@ -1,0 +1,13 @@
+1 🔄 Obedecendo a logica de atributos da tabela Usuarios(User) e Empresa(Company) ==> Fluxo de Validação, criação de empresa (resumo)
+- [] - Admin da empresa se cadastra e cria a empresa.
+- [] - Backend chama https://www.receitaws.com.br/#section-api para validar se a empresa existe e é nessa localidade
+    - criar um serviço no NestJS que:
+    - Recebe um CNPJ.
+    - Consulta a ReceitaWS.
+    - Retorna os dados da empresa.
+    - Pode ser usado para:
+    - Auto-preenchimento do formulário
+    - Validação automática
+- [] - Verificação básica do sócio
+- [] - Se o endereço for válido, salva a empresa como VALIDATED e libera o acesso à plataforma.
+- [] - Enquanto a empresa estiver com status PENDING ou REJECTED, nenhuma funcionalidade da plataforma será liberada.
