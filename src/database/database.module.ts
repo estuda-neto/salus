@@ -1,0 +1,20 @@
+import { Module } from '@nestjs/common';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
+
+@Module({
+  imports: [
+    SequelizeModule.forRoot({
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'test_db',
+      models: [Usuario], //registro dos models da aplicação
+      autoLoadModels: true,
+      synchronize: true, // cuidado com isso em produção!
+    }),
+  ],
+})
+export class DatabaseModule { }
