@@ -1,29 +1,14 @@
 import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,BeforeCreate,} from 'sequelize-typescript';
 import * as bcrypt from 'bcrypt';
-
-export enum TipoUsuario {
-    ADMIN = "admin",
-    CLIENTE = "cliente",
-    FUNCIONARIO = "fornecedor",
-}
-
-export function fromString(value: string): TipoUsuario {
-    switch(value) {
-        case 'cliente':
-            return TipoUsuario.CLIENTE;
-        case 'admin':
-            return TipoUsuario.ADMIN;
-        default:
-            throw new Error("Tipo de usuário inválido.");
-    }
-}
+import { TipoUsuario } from '../utils/enums/tipousuario';
+import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
-export class Usuario extends Model<Usuario> {
+export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttributes<Usuario>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  usuarioId: number;
+  usuarioId: CreationOptional<number>;
 
   @Column(DataType.STRING)
   nome: string;

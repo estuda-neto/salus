@@ -13,7 +13,7 @@ import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
       database: 'test_db',
       models: [Usuario], //registro dos models da aplicação
       autoLoadModels: true,
-      synchronize: true, // cuidado com isso em produção!
+      synchronize: true,
     }),
   ],
 })
