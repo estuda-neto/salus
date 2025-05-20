@@ -2,33 +2,34 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { DisponibilidadesService } from './disponibilidades.service';
 import { CreateDisponibilidadeDto } from './dto/create-disponibilidade.dto';
 import { UpdateDisponibilidadeDto } from './dto/update-disponibilidade.dto';
+import { Disponibilidade } from './entities/disponibilidade.entity';
 
 @Controller('disponibilidades')
 export class DisponibilidadesController {
-  constructor(private readonly disponibilidadesService: DisponibilidadesService) {}
+  constructor(private readonly disponibilidadesService: DisponibilidadesService) { }
 
   @Post()
-  create(@Body() createDisponibilidadeDto: CreateDisponibilidadeDto) {
+  async create(@Body() createDisponibilidadeDto: CreateDisponibilidadeDto): Promise<Disponibilidade> {
     return this.disponibilidadesService.create(createDisponibilidadeDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<Disponibilidade[]> {
     return this.disponibilidadesService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Disponibilidade | null> {
     return this.disponibilidadesService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDisponibilidadeDto: UpdateDisponibilidadeDto) {
+  async update(@Param('id') id: string, @Body() updateDisponibilidadeDto: UpdateDisponibilidadeDto): Promise<[number, Disponibilidade[]]> {
     return this.disponibilidadesService.update(+id, updateDisponibilidadeDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<number> {
     return this.disponibilidadesService.remove(+id);
   }
 }

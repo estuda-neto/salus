@@ -1,1 +1,3 @@
-export class CreateCompromissoDto {}
+export class CreateCompromissoDto {
+    descricao: string;
+}

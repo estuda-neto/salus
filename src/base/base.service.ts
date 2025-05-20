@@ -1,11 +1,13 @@
+import { InferCreationAttributes } from 'sequelize';
 import { BaseRepository } from './base.repository';
 import { Model } from 'sequelize-typescript';
 
-export class BaseService<T extends Model> {
+export class BaseService<T extends Model, C> {
   constructor(protected readonly repository: BaseRepository<T>) { }
 
-  async create(data: Partial<T>): Promise<T> {
-    return await this.repository.create(data);
+  async create(createDto: C): Promise<T> {
+    const resource = createDto as InferCreationAttributes<T>;
+    return await this.repository.create(resource);
   }
 
   async findAll(): Promise<T[]> {

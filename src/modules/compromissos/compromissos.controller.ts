@@ -2,33 +2,34 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CompromissosService } from './compromissos.service';
 import { CreateCompromissoDto } from './dto/create-compromisso.dto';
 import { UpdateCompromissoDto } from './dto/update-compromisso.dto';
+import { Compromisso } from './entities/compromisso.entity';
 
 @Controller('compromissos')
 export class CompromissosController {
-  constructor(private readonly compromissosService: CompromissosService) {}
+  constructor(private readonly compromissosService: CompromissosService) { }
 
   @Post()
-  create(@Body() createCompromissoDto: CreateCompromissoDto) {
+  async create(@Body() createCompromissoDto: CreateCompromissoDto): Promise<Compromisso> {
     return this.compromissosService.create(createCompromissoDto);
   }
 
   @Get()
-  findAll() {
+  async findAll(): Promise<Compromisso[]> {
     return this.compromissosService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string): Promise<Compromisso | null> {
     return this.compromissosService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCompromissoDto: UpdateCompromissoDto) {
+  async update(@Param('id') id: string, @Body() updateCompromissoDto: UpdateCompromissoDto): Promise<[number, Compromisso[]]> {
     return this.compromissosService.update(+id, updateCompromissoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string): Promise<number> {
     return this.compromissosService.remove(+id);
   }
 }

@@ -1,26 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { BaseService } from 'src/base/base.service';
+import { Servico } from './entities/servico.entity';
+import { ServicosRepository } from './repository/servicosRepository';
 import { CreateServicoDto } from './dto/create-servico.dto';
-import { UpdateServicoDto } from './dto/update-servico.dto';
 
 @Injectable()
-export class ServicosService {
-  create(createServicoDto: CreateServicoDto) {
-    return 'This action adds a new servico';
-  }
-
-  findAll() {
-    return `This action returns all servicos`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} servico`;
-  }
-
-  update(id: number, updateServicoDto: UpdateServicoDto) {
-    return `This action updates a #${id} servico`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} servico`;
+export class ServicosService extends BaseService<Servico, CreateServicoDto> {
+  constructor(private readonly servicosRepository: ServicosRepository) {
+    super(servicosRepository);
   }
 }

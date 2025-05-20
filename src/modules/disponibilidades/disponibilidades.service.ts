@@ -1,26 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { Disponibilidade } from './entities/disponibilidade.entity';
+import { BaseService } from 'src/base/base.service';
+import { DisponibilidadesRepository } from './repository/disponibilidadesRepository';
 import { CreateDisponibilidadeDto } from './dto/create-disponibilidade.dto';
-import { UpdateDisponibilidadeDto } from './dto/update-disponibilidade.dto';
 
 @Injectable()
-export class DisponibilidadesService {
-  create(createDisponibilidadeDto: CreateDisponibilidadeDto) {
-    return 'This action adds a new disponibilidade';
-  }
-
-  findAll() {
-    return `This action returns all disponibilidades`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} disponibilidade`;
-  }
-
-  update(id: number, updateDisponibilidadeDto: UpdateDisponibilidadeDto) {
-    return `This action updates a #${id} disponibilidade`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} disponibilidade`;
+export class DisponibilidadesService extends BaseService<Disponibilidade, CreateDisponibilidadeDto> {
+  constructor(private readonly disponibilidadeRepository: DisponibilidadesRepository) {
+    super(disponibilidadeRepository);
   }
 }

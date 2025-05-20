@@ -1,5 +1,4 @@
-import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,BeforeCreate,} from 'sequelize-typescript';
-import * as bcrypt from 'bcrypt';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
 import { TipoUsuario } from '../utils/enums/tipousuario';
 import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 
@@ -30,10 +29,4 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
 
   @Column(DataType.ENUM(...Object.values(TipoUsuario)))
   tipoUsuario: TipoUsuario;
-
-  @BeforeCreate
-  static async hashPassword(instance: Usuario) {
-    const salt = await bcrypt.genSalt(12);
-    instance.password = await bcrypt.hash(instance.password, salt);
-  }
 }
