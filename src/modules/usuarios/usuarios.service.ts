@@ -1,30 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { UsuarioRepository } from './repositories/usuarios.repository';
 import { Usuario } from './entities/usuario.entity';
+import { BaseRepository } from 'src/base/base.repository';
+import { InjectModel } from '@nestjs/sequelize';
+import { BaseService } from 'src/base/base.service';
 
 @Injectable()
-export class UsuariosService {
-  constructor(private readonly usuarioRepository: UsuarioRepository) { }
+export class UsuariosService extends BaseService<Usuario> {
 
-  async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    return await this.usuarioRepository.criar(createUsuarioDto);
-  }
-
-  findAll() {
-    return `This action returns all usuarios`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
-  }
-
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  constructor(@InjectModel(Usuario) usuarioModel: typeof Usuario) {
+    super(new BaseRepository<Usuario>(usuarioModel));
   }
 }

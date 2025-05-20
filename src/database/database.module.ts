@@ -11,7 +11,7 @@ import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
       username: 'root',
       password: 'root',
       database: 'test_db',
-      models: [Usuario], //registro dos models da aplicação
+      models: [Usuario],
       autoLoadModels: true,
       synchronize: true,
     }),
