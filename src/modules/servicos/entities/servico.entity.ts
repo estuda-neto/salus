@@ -4,6 +4,8 @@ import { TipoServico } from '../utils/enums/tiposervico';
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { EmpresaServico } from './empresa_servico.entity';
 import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
+import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
+import { ServicoUsuario } from './servico_usuario.entity';
 
 @Table({ tableName: 'tb_servicos', timestamps: true })
 export class Servico extends Model<InferAttributes<Servico>, InferCreationAttributes<Servico>> {
@@ -32,4 +34,8 @@ export class Servico extends Model<InferAttributes<Servico>, InferCreationAttrib
 
     @BelongsTo(() => Compromisso)
     compromisso: Compromisso;
+
+    //relationships usuario <-> n x n com serviço <-> 
+    @BelongsToMany(() => Usuario, () => ServicoUsuario)
+    usuarios: Usuario[];
 }

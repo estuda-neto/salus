@@ -5,6 +5,7 @@ import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibi
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { EmpresaServico } from 'src/modules/servicos/entities/empresa_servico.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
+import { ServicoUsuario } from 'src/modules/servicos/entities/servico_usuario.entity';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 
 @Module({
@@ -16,7 +17,7 @@ import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
       username: 'root',
       password: 'root',
       database: 'test_db',
-      models: [Usuario, Empresa, Servico,EmpresaServico, Disponibilidade, Compromisso],
+      models: [Usuario, Empresa, Servico, EmpresaServico, ServicoUsuario, Disponibilidade, Compromisso],
       autoLoadModels: true,
       synchronize: true,
     }),
