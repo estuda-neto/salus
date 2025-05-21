@@ -24,6 +24,4 @@ export class UsuarioRepository extends BaseRepository<Usuario> {
   async buscarTodos(): Promise<Usuario[]> {
     return this.findAll();
   }
-
-  // Você pode criar métodos adicionais específicos aqui
 }
