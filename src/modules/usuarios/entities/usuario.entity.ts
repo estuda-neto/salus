@@ -1,6 +1,7 @@
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { TipoUsuario } from '../utils/enums/tipousuario';
 import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
+import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
 export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttributes<Usuario>> {
@@ -29,4 +30,13 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
 
   @Column(DataType.ENUM(...Object.values(TipoUsuario)))
   tipoUsuario: TipoUsuario;
+
+  //relationships empresa <-> 1 x n com usuarios <-> 
+  @ForeignKey(() => Empresa)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  empresaId: number;
+
+  @BelongsTo(() => Empresa)
+  empresa: Empresa;
+
 }
