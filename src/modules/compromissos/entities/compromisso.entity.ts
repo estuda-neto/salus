@@ -3,6 +3,7 @@ import { InferAttributes, InferCreationAttributes, CreationOptional } from 'sequ
 import { CompromissoStatus } from '../enums/status';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibilidade.entity';
+import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 
 @Table({ tableName: 'tb_compromissos', timestamps: true })
 export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreationAttributes<Compromisso>> {
@@ -28,4 +29,12 @@ export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreati
 
   @BelongsTo(() => Disponibilidade)
   disponibilidade: Disponibilidade;
+
+  //relationships usuario <-> 1 x n compromisso <-> 
+  @ForeignKey(() => Usuario)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  usuarioId: number;
+
+  @BelongsTo(() => Usuario)
+  usuario: Usuario;
 }

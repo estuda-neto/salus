@@ -5,6 +5,7 @@ import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibilidade.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { ServicoUsuario } from 'src/modules/servicos/entities/servico_usuario.entity';
+import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
 export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttributes<Usuario>> {
@@ -48,7 +49,11 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
 
 
   //relationships usuario <-> n x n com serviço <-> 
-  @BelongsToMany(()=>Servico,()=>ServicoUsuario)
-  servicos:Servico[];
+  @BelongsToMany(() => Servico, () => ServicoUsuario)
+  servicos: Servico[];
+
+  //relationships usuario <-> 1 x n compromisso <-> 
+  @HasMany(() => Compromisso)
+  compromissos: Compromisso[];
 
 }
