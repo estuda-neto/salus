@@ -12,30 +12,30 @@ export class Servico extends Model<InferAttributes<Servico>, InferCreationAttrib
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
-    servicoId: CreationOptional<number>;
+    declare servicoId: CreationOptional<number>;
 
     @Column({ type: DataType.DECIMAL(10, 2), allowNull: false, validate: { min: 0 } })
-    valor: number;
+    declare valor: number;
 
     @Column({ type: DataType.INTEGER, allowNull: false, validate: { min: 1, } })
-    duracao: number; // duração em minutos, % 60 e transformar, depende do procedimento
+    declare duracao: number; // duração em minutos, % 60 e transformar, depende do procedimento
 
     @Column(DataType.ENUM(...Object.values(TipoServico)))
-    tipoServico: TipoServico;
+    declare tipoServico: TipoServico;
 
     //relationships empresa <-> n x n com serviços <-> 
     @BelongsToMany(() => Empresa, () => EmpresaServico)
-    empresas: Empresa[];
+    declare empresas: Empresa[];
 
     //relationships servico <-> n x n com compromisso <-> 
     @ForeignKey(() => Compromisso)
     @Column
-    compromissoId: number;
+    declare compromissoId: number;
 
     @BelongsTo(() => Compromisso)
-    compromisso: Compromisso;
+    declare compromisso: Compromisso;
 
     //relationships usuario <-> n x n com serviço <-> 
     @BelongsToMany(() => Usuario, () => ServicoUsuario)
-    usuarios: Usuario[];
+    declare usuarios: Usuario[];
 }

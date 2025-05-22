@@ -9,19 +9,19 @@ export class EmpresaServico extends Model<InferAttributes<EmpresaServico>, Infer
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
-    empresaservicoId: CreationOptional<number>;
+    declare empresaservicoId: CreationOptional<number>;
 
     @ForeignKey(() => Empresa)
     @Column
-    empresaId: number;
+    declare empresaId: number;
 
     @ForeignKey(() => Servico)
     @Column
-    servicoId: number;
+    declare servicoId: number;
 
     @BelongsTo(() => Empresa)
-    empresa: Empresa;
+    declare empresa: Empresa;
 
     @BelongsTo(() => Servico)
-    servico: Servico;
+    declare servico: Servico;
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import crypto from "crypto";
+import * as crypto from "crypto";
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

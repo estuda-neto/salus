@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { TransformErrorForHttpTypeInterceptor } from './base/base.interception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,13 +20,17 @@ async function bootstrap() {
         description: 'Informe o token JWT',
         in: 'header',
       },
-      'access-token',
+      'jwt',
     )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
+  app.useGlobalInterceptors(new TransformErrorForHttpTypeInterceptor());
   await app.listen(process.env.PORT ?? 3000);
 }
 void bootstrap();

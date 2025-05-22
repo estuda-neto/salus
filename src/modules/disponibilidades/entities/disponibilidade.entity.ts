@@ -9,27 +9,27 @@ export class Disponibilidade extends Model<InferAttributes<Disponibilidade>, Inf
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
-    disponibilidadeId: CreationOptional<number>;
+    declare disponibilidadeId: CreationOptional<number>;
 
     @Column({ type: DataType.DATEONLY, allowNull: false })
-    data: string;
+    declare data: string;
 
     @Column({ type: DataType.TIME, allowNull: false, })
-    hora: string;
+    declare hora: string;
 
     @Column({ type: DataType.ENUM(...Object.values(DisponibilidadeStatus)), allowNull: false, })
-    status: DisponibilidadeStatus;
+    declare status: DisponibilidadeStatus;
 
     //relationships usuario <-> 1 x n com disponibilidade(agendamento) <-> 
     @ForeignKey(() => Usuario)
     @Column({ type: DataType.INTEGER, allowNull: true })
-    usuarioId: number;
+    declare usuarioId: number;
 
     @BelongsTo(() => Usuario)
-    usuario: Usuario;
+    declare usuario: Usuario;
 
     //relationships disponibilidade <-> 1 x 1 com compromisso <-> 
     @HasOne(() => Compromisso)
-    compromissso: Compromisso;
+    declare compromissso: Compromisso;
 
 }

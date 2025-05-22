@@ -11,49 +11,49 @@ export class Empresa extends Model<InferAttributes<Empresa>, InferCreationAttrib
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
-    empresaId: CreationOptional<number>;
+    declare empresaId: CreationOptional<number>;
 
     @Column({ type: DataType.STRING, allowNull: false })
-    nome: string;
+    declare nome: string;
 
     @Column({ type: DataType.STRING, allowNull: false, unique: true })
-    cnpj: string;
+    declare cnpj: string;
 
     @Column({ type: DataType.STRING, allowNull: false })
-    telefone: string;
+    declare telefone: string;
 
-    @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true })
-    imagens: string[];
-
-    @Column({ type: DataType.STRING, allowNull: false })
-    cep: string;
+    @Column({ type: DataType.JSON, allowNull: true, })
+    declare imagens: string[];
 
     @Column({ type: DataType.STRING, allowNull: false })
-    rua: string;
+    declare cep: string;
+
+    @Column({ type: DataType.STRING, allowNull: false })
+    declare rua: string;
 
     @Column({ type: DataType.INTEGER, allowNull: false })
-    numero: number;
+    declare numero: number;
 
     @Column({ type: DataType.STRING, allowNull: true })
-    complemento: string;
+    declare complemento: string;
 
     @Column({ type: DataType.STRING, allowNull: false })
-    bairro: string;
+    declare bairro: string;
 
     @Column({ type: DataType.STRING, allowNull: false })
-    cidade: string;
+    declare cidade: string;
 
     @Column(DataType.ENUM(...Object.values(EstadosBrasileiros)))
-    estado: EstadosBrasileiros;
+    declare estado: EstadosBrasileiros;
 
     @Column(DataType.ENUM(...Object.values(EmpresaStatus)))
-    empresaStatus: EmpresaStatus;
+    declare empresaStatus: EmpresaStatus;
 
     //relationships empresa <-> 1 x n com usuarios <-> 
     @HasMany(() => Usuario)
-    usuarios: Usuario[];
+    declare usuarios: Usuario[];
 
     //relationships empresa <-> n x n com serviços <-> 
     @BelongsToMany(() => Servico, () => EmpresaServico)
-    servicos: Servico[]
+    declare servicos: Servico[]
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import * as jwt from "jsonwebtoken";
+import * as bcrypt from 'bcrypt';
 import { TipoUsuario } from './utils/enums/tipousuario';
 import { Usuario } from './entities/usuario.entity';
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 import { UsuarioRepository } from './repositories/usuarios.repository';
 import { ConfigService } from '@nestjs/config';
 import { LoginResponse } from './utils/interfaces/loginresponse';

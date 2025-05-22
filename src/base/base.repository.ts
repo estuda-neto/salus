@@ -1,4 +1,4 @@
-import { WhereOptions } from 'sequelize';
+import { FindAndCountOptions, WhereOptions } from 'sequelize';
 import { Model, ModelCtor } from 'sequelize-typescript';
 
 export class BaseRepository<T extends Model> {
@@ -29,6 +29,10 @@ export class BaseRepository<T extends Model> {
   async remove(id: number): Promise<number> {
     const where = { [this.primaryKeyField]: id } as WhereOptions;
     return this.model.destroy({ where });
+  }
+
+  public async findWithPagination(limit: number, offset: number, options?: Omit<FindAndCountOptions, "group">): Promise<{ rows: T[]; count: number }> {
+    return await this.model.findAndCountAll({ limit, offset, ...options });
   }
 
   private getPrimaryKeyField(): string {

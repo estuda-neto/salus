@@ -12,48 +12,48 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  usuarioId: CreationOptional<number>;
+  declare usuarioId: CreationOptional<number>;
 
   @Column(DataType.STRING)
-  nome: string;
+  declare nome: string;
 
   @Column({ type: DataType.STRING, unique: true })
-  cpf: string;
+  declare cpf: string;
 
   @Column({ type: DataType.STRING, unique: true })
-  email: string;
+  declare email: string;
 
   @Column(DataType.STRING)
-  password: string;
+  declare password: string;
 
   @Column(DataType.STRING)
-  telefone: string;
+  declare telefone: string;
 
   @Column(DataType.STRING)
-  endereco: string;
+  declare endereco: string;
 
   @Column(DataType.ENUM(...Object.values(TipoUsuario)))
-  tipoUsuario: TipoUsuario;
+  declare tipoUsuario: TipoUsuario;
 
   //relationships empresa <-> 1 x n com usuarios <-> 
   @ForeignKey(() => Empresa)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  empresaId: number;
+  declare empresaId: number;
 
   @BelongsTo(() => Empresa)
-  empresa: Empresa;
+  declare empresa: Empresa;
 
   //relationships usuario <-> 1 x n com disponibilidade(agendamento) <-> 
   @HasMany(() => Disponibilidade)
-  disponibilidades: Disponibilidade[]
+  declare disponibilidades: Disponibilidade[]
 
 
   //relationships usuario <-> n x n com serviço <-> 
   @BelongsToMany(() => Servico, () => ServicoUsuario)
-  servicos: Servico[];
+  declare servicos: Servico[];
 
   //relationships usuario <-> 1 x n compromisso <-> 
   @HasMany(() => Compromisso)
-  compromissos: Compromisso[];
+  declare compromissos: Compromisso[];
 
 }

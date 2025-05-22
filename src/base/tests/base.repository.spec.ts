@@ -1,4 +1,3 @@
-// base.repository.spec.ts
 import { Model, ModelCtor } from 'sequelize-typescript';
 import { BaseRepository } from '../base.repository';
 
@@ -9,7 +8,6 @@ describe('BaseRepository', () => {
   const primaryKeyField = 'customId';
 
   beforeEach(() => {
-    // Mock dos atributos do modelo
     mockModel = {
       getAttributes: jest.fn().mockReturnValue({
         [primaryKeyField]: { primaryKey: true },
@@ -19,6 +17,7 @@ describe('BaseRepository', () => {
       findByPk: jest.fn().mockResolvedValue(null),
       update: jest.fn().mockResolvedValue([1, [{}]]),
       destroy: jest.fn().mockResolvedValue(1),
+      findAndCountAll: jest.fn().mockResolvedValue({ rows: [], count: 0 }),
       name: 'MockModel',
     } as unknown as ModelCtor<Model>;
 
@@ -58,6 +57,24 @@ describe('BaseRepository', () => {
     expect(mockModel.destroy).toHaveBeenCalledWith({
       where: { [primaryKeyField]: id },
     });
+  });
+
+  it('should find records with pagination', async () => {
+    const limit = 10;
+    const offset = 20;
+    const options = { where: { ativo: true } };
+
+    const expectedResult = { rows: [], count: 0 };
+    (mockModel.findAndCountAll as jest.Mock).mockResolvedValue(expectedResult);
+
+    const result = await repository.findWithPagination(limit, offset, options);
+
+    expect(mockModel.findAndCountAll).toHaveBeenCalledWith({
+      limit,
+      offset,
+      ...options,
+    });
+    expect(result).toEqual(expectedResult);
   });
 
   it('should throw if no primary key is found', () => {

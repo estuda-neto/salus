@@ -7,6 +7,7 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UsuarioRepository } from './repositories/usuarios.repository';
 import { EmailsService } from './emails.service';
 import { TokensService } from './token.service';
+import { ApiError } from 'src/base/base.error';
 
 @Injectable()
 export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
@@ -65,5 +66,11 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
     }
     return 0;
   }
+
+  public async listarPaginado(limit: number, offset: number): Promise<{ rows: Usuario[]; count: number }> {
+    const objectWithUsuarios = await this.usuariosRepository.findWithPagination(limit, offset);
+    if (!objectWithUsuarios) throw new ApiError("Erro interno: o recurso não pôde ser recuperado!", 400, 'O limite ou offset está inválido');
+    return objectWithUsuarios;
+}
 
 }

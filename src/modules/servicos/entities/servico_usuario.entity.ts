@@ -10,21 +10,21 @@ export class ServicoUsuario extends Model<InferAttributes<ServicoUsuario>, Infer
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.INTEGER)
-    servicousuarioId: CreationOptional<number>;
+    declare servicousuarioId: CreationOptional<number>;
 
     @ForeignKey(() => Usuario)
     @Column
-    usuarioId: number;
+    declare usuarioId: number;
 
     @ForeignKey(() => Servico)
     @Column
-    servicoId: number;
+    declare servicoId: number;
 
     @BelongsTo(() => Usuario)
-    usuario: Usuario;
+    declare usuario: Usuario;
 
     @BelongsTo(() => Servico)
-    servico: Servico;
+    declare servico: Servico;
 }
 
 

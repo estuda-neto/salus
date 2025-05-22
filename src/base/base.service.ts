@@ -1,6 +1,7 @@
 import { InferCreationAttributes } from 'sequelize';
 import { BaseRepository } from './base.repository';
 import { Model } from 'sequelize-typescript';
+import { ApiError } from './base.error';
 
 export class BaseService<T extends Model, C> {
   constructor(protected readonly repository: BaseRepository<T>) { }
@@ -14,8 +15,10 @@ export class BaseService<T extends Model, C> {
     return await this.repository.findAll();
   }
 
-  async findOne(id: number): Promise<T | null> {
-    return await this.repository.findOne(id);
+  async findOne(id: number): Promise<T> {
+    const resource = await this.repository.findOne(id);
+    if (!resource) throw new ApiError('The resource sought with this identifier is not found in the application!', 404);
+    return resource;
   }
 
   async update(id: number, data: Partial<T>): Promise<[number, T[]]> {
@@ -23,6 +26,8 @@ export class BaseService<T extends Model, C> {
   }
 
   async remove(id: number): Promise<number> {
+    const resource = await this.repository.findOne(id);
+    if (!resource) throw new ApiError('The resource to be deleted, with that identifier is not found in the application!', 404);
     return await this.repository.remove(id);
   }
 }

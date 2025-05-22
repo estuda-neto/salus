@@ -5,7 +5,7 @@ import { TipoUsuario } from '../utils/enums/tipousuario';
 describe('Usuario - Entity', () => {
     const mockUsuario: Partial<Usuario> = {
         usuarioId: 1, nome: 'João', cpf: '12345678900', email: 'joao@email.com', password: 'senha123',
-        telefone: '11999999999', endereco: 'Rua Teste', tipoUsuario: TipoUsuario.CLIENTE,
+        telefone: '11999999999', endereco: 'Rua Teste', tipoUsuario: TipoUsuario.PACIENTE,
     };
     
     it('must contain all expected attributes', () => {
@@ -25,9 +25,5 @@ describe('Usuario - Entity', () => {
         expect(typeof mockUsuario.telefone).toBe('string');
         expect(typeof mockUsuario.endereco).toBe('string');
         expect(Object.values(TipoUsuario)).toContain(mockUsuario.tipoUsuario);
-    });
-
-    it('must have static method hashPassword', () => {
-        expect(typeof Usuario.hashPassword).toBe('function');
     });
 });

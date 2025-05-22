@@ -10,31 +10,31 @@ export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreati
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  compromissoId: CreationOptional<number>;
+  declare compromissoId: CreationOptional<number>;
 
   @Column(DataType.STRING)
-  descricao: string;
+  declare descricao: string;
 
   @Column(DataType.ENUM(...Object.values(CompromissoStatus)))
-  compromissoStatus: CompromissoStatus;
+  declare compromissoStatus: CompromissoStatus;
 
   //relationships servico <-> n x n com compromisso <-> 
   @HasOne(() => Servico)
-  servico: Servico;
+  declare servico: Servico;
 
   //relationships disponibilidade <-> 1 x 1 com compromisso <->
   @ForeignKey(() => Disponibilidade)
   @Column
-  disponibilidadeId: number;
+  declare disponibilidadeId: number;
 
   @BelongsTo(() => Disponibilidade)
-  disponibilidade: Disponibilidade;
+  declare disponibilidade: Disponibilidade;
 
   //relationships usuario <-> 1 x n compromisso <-> 
   @ForeignKey(() => Usuario)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  usuarioId: number;
+  declare usuarioId: number;
 
   @BelongsTo(() => Usuario)
-  usuario: Usuario;
+  declare usuario: Usuario;
 }
