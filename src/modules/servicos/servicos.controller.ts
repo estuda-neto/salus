@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ServicosService } from './servicos.service';
 import { CreateServicoDto } from './dto/create-servico.dto';
 import { UpdateServicoDto } from './dto/update-servico.dto';
@@ -6,7 +14,7 @@ import { Servico } from './entities/servico.entity';
 
 @Controller('servicos')
 export class ServicosController {
-  constructor(private readonly servicosService: ServicosService) { }
+  constructor(private readonly servicosService: ServicosService) {}
 
   @Post()
   async create(@Body() createServicoDto: CreateServicoDto): Promise<Servico> {
@@ -24,7 +32,10 @@ export class ServicosController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateServicoDto: UpdateServicoDto): Promise<[number, Servico[]]> {
+  async update(
+    @Param('id') id: string,
+    @Body() updateServicoDto: UpdateServicoDto,
+  ): Promise<[number, Servico[]]> {
     return this.servicosService.update(+id, updateServicoDto);
   }
 

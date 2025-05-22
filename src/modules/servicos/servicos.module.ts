@@ -9,6 +9,6 @@ import { ServicosRepository } from './repository/servicosRepository';
   imports: [SequelizeModule.forFeature([Servico])],
   controllers: [ServicosController],
   providers: [ServicosService, ServicosRepository],
-  exports: [ServicosService]
+  exports: [ServicosService],
 })
-export class ServicosModule { }
+export class ServicosModule {}

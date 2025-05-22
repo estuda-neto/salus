@@ -1,6 +1,21 @@
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, BelongsTo, ForeignKey, HasMany, BelongsToMany } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  BelongsTo,
+  ForeignKey,
+  HasMany,
+  BelongsToMany,
+} from 'sequelize-typescript';
 import { TipoUsuario } from '../utils/enums/tipousuario';
-import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
+import {
+  CreationOptional,
+  InferAttributes,
+  InferCreationAttributes,
+} from 'sequelize';
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibilidade.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
@@ -8,7 +23,10 @@ import { ServicoUsuario } from 'src/modules/servicos/entities/servico_usuario.en
 import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
-export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttributes<Usuario>> {
+export class Usuario extends Model<
+  InferAttributes<Usuario>,
+  InferCreationAttributes<Usuario>
+> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -35,7 +53,7 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
   @Column(DataType.ENUM(...Object.values(TipoUsuario)))
   declare tipoUsuario: TipoUsuario;
 
-  //relationships empresa <-> 1 x n com usuarios <-> 
+  //relationships empresa <-> 1 x n com usuarios <->
   @ForeignKey(() => Empresa)
   @Column({ type: DataType.INTEGER, allowNull: true })
   declare empresaId: number;
@@ -43,17 +61,15 @@ export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttrib
   @BelongsTo(() => Empresa)
   declare empresa: Empresa;
 
-  //relationships usuario <-> 1 x n com disponibilidade(agendamento) <-> 
+  //relationships usuario <-> 1 x n com disponibilidade(agendamento) <->
   @HasMany(() => Disponibilidade)
-  declare disponibilidades: Disponibilidade[]
+  declare disponibilidades: Disponibilidade[];
 
-
-  //relationships usuario <-> n x n com serviço <-> 
+  //relationships usuario <-> n x n com serviço <->
   @BelongsToMany(() => Servico, () => ServicoUsuario)
   declare servicos: Servico[];
 
-  //relationships usuario <-> 1 x n compromisso <-> 
+  //relationships usuario <-> 1 x n compromisso <->
   @HasMany(() => Compromisso)
   declare compromissos: Compromisso[];
-
 }

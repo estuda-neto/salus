@@ -10,7 +10,7 @@ A aplicação **Salus** será uma API backend desenvolvida com **Node.js**, **Ne
 - [ ] Cada empresa deve possuir uma conta de usuário com o papel de **administrador (ADMIN)**.
 - [ ] O sistema deve permitir o cadastro de **usuários** com papéis distintos:
   - ADMIN (administra a empresa)
-  - PROFESSIONAL (realiza atendimentos)
+  - PROFISSIONAL (realiza atendimentos)
   - PATIENT (realiza agendamentos)
 - [ ] O sistema deve utilizar **autenticação JWT** e **controle de permissões** baseado em roles.
 

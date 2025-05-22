@@ -6,10 +6,13 @@ import { TransformErrorForHttpTypeInterceptor } from './base/base.interception';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true,transform:true }));
 
-  const config = new DocumentBuilder().setTitle('Salus API')
-    .setDescription('Uma aplicação de agendamento de consultas e exames médicos.')
+  const config = new DocumentBuilder()
+    .setTitle('Salus API')
+    .setDescription(
+      'Uma aplicação de agendamento de consultas e exames médicos.',
+    )
     .setVersion('1.0')
     .addBearerAuth(
       {

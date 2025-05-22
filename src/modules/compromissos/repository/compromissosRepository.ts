@@ -5,8 +5,10 @@ import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entit
 
 @Injectable()
 export class CompromissosRepository extends BaseRepository<Compromisso> {
-
-  constructor(@InjectModel(Compromisso) private readonly compromissoModel: typeof Compromisso) {
+  constructor(
+    @InjectModel(Compromisso)
+    private readonly compromissoModel: typeof Compromisso,
+  ) {
     super(compromissoModel);
   }
 

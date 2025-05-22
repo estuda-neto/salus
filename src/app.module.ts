@@ -8,8 +8,16 @@ import { CompromissosModule } from './modules/compromissos/compromissos.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), DatabaseModule, UsuariosModule, EmpresasModule, ServicosModule, CompromissosModule, DisponibilidadesModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+    UsuariosModule,
+    EmpresasModule,
+    ServicosModule,
+    CompromissosModule,
+    DisponibilidadesModule,
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

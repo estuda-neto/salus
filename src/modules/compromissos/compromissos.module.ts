@@ -9,6 +9,6 @@ import { CompromissosRepository } from './repository/compromissosRepository';
   imports: [SequelizeModule.forFeature([Compromisso])],
   controllers: [CompromissosController],
   providers: [CompromissosService, CompromissosRepository],
-  exports: [CompromissosService]
+  exports: [CompromissosService],
 })
-export class CompromissosModule { }
+export class CompromissosModule {}

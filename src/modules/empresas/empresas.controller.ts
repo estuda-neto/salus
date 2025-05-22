@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { EmpresasService } from './empresas.service';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
@@ -19,17 +19,17 @@ export class EmpresasController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Empresa | null> {
-    return this.empresasService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Empresa | null> {
+    return this.empresasService.findOne(id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateEmpresaDto: UpdateEmpresaDto): Promise<[number, Empresa[]]> {
-    return this.empresasService.update(+id, updateEmpresaDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateEmpresaDto: UpdateEmpresaDto): Promise<[number, Empresa[]]> {
+    return this.empresasService.update(id, updateEmpresaDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<number> {
-    return this.empresasService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<number> {
+    return this.empresasService.remove(id);
   }
 }

@@ -9,6 +9,6 @@ import { DisponibilidadesRepository } from './repository/disponibilidadesReposit
   imports: [SequelizeModule.forFeature([Disponibilidade])],
   controllers: [DisponibilidadesController],
   providers: [DisponibilidadesService, DisponibilidadesRepository],
-  exports: [DisponibilidadesService]
+  exports: [DisponibilidadesService],
 })
-export class DisponibilidadesModule { }
+export class DisponibilidadesModule {}

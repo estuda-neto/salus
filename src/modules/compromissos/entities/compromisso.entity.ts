@@ -1,12 +1,29 @@
-import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, HasOne, ForeignKey, BelongsTo } from 'sequelize-typescript';
-import { InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  PrimaryKey,
+  AutoIncrement,
+  HasOne,
+  ForeignKey,
+  BelongsTo,
+} from 'sequelize-typescript';
+import {
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from 'sequelize';
 import { CompromissoStatus } from '../enums/status';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibilidade.entity';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 
 @Table({ tableName: 'tb_compromissos', timestamps: true })
-export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreationAttributes<Compromisso>> {
+export class Compromisso extends Model<
+  InferAttributes<Compromisso>,
+  InferCreationAttributes<Compromisso>
+> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -18,7 +35,7 @@ export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreati
   @Column(DataType.ENUM(...Object.values(CompromissoStatus)))
   declare compromissoStatus: CompromissoStatus;
 
-  //relationships servico <-> n x n com compromisso <-> 
+  //relationships servico <-> n x n com compromisso <->
   @HasOne(() => Servico)
   declare servico: Servico;
 
@@ -30,7 +47,7 @@ export class Compromisso extends Model<InferAttributes<Compromisso>, InferCreati
   @BelongsTo(() => Disponibilidade)
   declare disponibilidade: Disponibilidade;
 
-  //relationships usuario <-> 1 x n compromisso <-> 
+  //relationships usuario <-> 1 x n compromisso <->
   @ForeignKey(() => Usuario)
   @Column({ type: DataType.INTEGER, allowNull: true })
   declare usuarioId: number;

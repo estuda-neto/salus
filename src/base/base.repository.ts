@@ -2,7 +2,6 @@ import { FindAndCountOptions, WhereOptions } from 'sequelize';
 import { Model, ModelCtor } from 'sequelize-typescript';
 
 export class BaseRepository<T extends Model> {
-
   private readonly primaryKeyField: string;
 
   constructor(private readonly model: ModelCtor<T>) {
@@ -21,7 +20,10 @@ export class BaseRepository<T extends Model> {
     return this.model.findByPk(id);
   }
 
-  async update(id: number, data: Partial<T['_creationAttributes']>): Promise<[number, T[]]> {
+  async update(
+    id: number,
+    data: Partial<T['_creationAttributes']>,
+  ): Promise<[number, T[]]> {
     const where = { [this.primaryKeyField]: id } as WhereOptions;
     return this.model.update(data, { where, returning: true });
   }
@@ -31,7 +33,11 @@ export class BaseRepository<T extends Model> {
     return this.model.destroy({ where });
   }
 
-  public async findWithPagination(limit: number, offset: number, options?: Omit<FindAndCountOptions, "group">): Promise<{ rows: T[]; count: number }> {
+  public async findWithPagination(
+    limit: number,
+    offset: number,
+    options?: Omit<FindAndCountOptions, 'group'>,
+  ): Promise<{ rows: T[]; count: number }> {
     return await this.model.findAndCountAll({ limit, offset, ...options });
   }
 

@@ -5,8 +5,13 @@ import { DisponibilidadesRepository } from './repository/disponibilidadesReposit
 import { CreateDisponibilidadeDto } from './dto/create-disponibilidade.dto';
 
 @Injectable()
-export class DisponibilidadesService extends BaseService<Disponibilidade, CreateDisponibilidadeDto> {
-  constructor(private readonly disponibilidadeRepository: DisponibilidadesRepository) {
+export class DisponibilidadesService extends BaseService<
+  Disponibilidade,
+  CreateDisponibilidadeDto
+> {
+  constructor(
+    private readonly disponibilidadeRepository: DisponibilidadesRepository,
+  ) {
     super(disponibilidadeRepository);
   }
 }

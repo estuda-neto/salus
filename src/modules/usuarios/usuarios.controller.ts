@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Put, ParseIntPipe } from '@nestjs/common';
+import {Controller,Get,Post,Body,Patch,Param,Delete,UseGuards,Query,Put,ParseIntPipe} from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -16,7 +16,7 @@ import { ResetPasswordDto } from './dto/reset_password.dto';
 
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService, private readonly authService: AuthService) { }
+  constructor(private readonly usuariosService: UsuariosService,private readonly authService: AuthService) { }
 
   // addBearerAuth swagger docs
   @ApiBearerAuth('jwt')
@@ -35,20 +35,8 @@ export class UsuariosController {
   @Post('login')
   async login(@Body() loginUsuarioDto: LoginUsuarioDto): Promise<LoginResponse> {
     const { email, password, clientType } = loginUsuarioDto;
-    if (!["web", "mobile"].includes(clientType)) throw new Error("client type inválido");
+    if (!['web', 'mobile'].includes(clientType)) throw new Error('client type inválido');
     return await this.authService.login(email, password, clientType);
-  }
-
-  @Post('send-email-reset-password')
-  async sendEmailPassword(@Body() emailDto: EmailResetDto): Promise<boolean> {
-    return await this.usuariosService.sendEmailWithHashResetPassword(emailDto.email);
-  }
-
-  @Put('reset-password')
-  async redefinePassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<{ usuarioId: number }> {
-    const { token, email, password, repassword } = resetPasswordDto;
-    const redefinido = await this.usuariosService.redefinirSenha(token, email, password, repassword);
-    return { usuarioId: redefinido };
   }
 
   @Get(':id')
@@ -66,8 +54,20 @@ export class UsuariosController {
     return this.usuariosService.remove(id);
   }
 
+  @Post('send-email-reset-password')
+  async sendEmailPassword(@Body() emailDto: EmailResetDto): Promise<boolean> {
+    return await this.usuariosService.sendEmailWithHashResetPassword(emailDto.email);
+  }
+
+  @Put('reset-password')
+  async redefinePassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<{ usuarioId: number }> {
+    const { token, email, password, repassword } = resetPasswordDto;
+    const redefinido = await this.usuariosService.redefinirSenha(token, email, password, repassword);
+    return { usuarioId: redefinido };
+  }
+
   @Get('getAll/paginate')
-  async getPaginate(@Query('limit') limit: string = "10", @Query('offset') offset: string = "0"): Promise<{ rows: Usuario[], count: number }> {
+  async getPaginate(@Query('limit') limit: string = '10', @Query('offset') offset: string = '0'): Promise<{ rows: Usuario[]; count: number }> {
     const limitNumber = Number(limit);
     const offsetNumber = Number(offset);
     if (isNaN(limitNumber) || isNaN(offsetNumber)) throw new ApiError('Invalid query parameters, not numbers.', 400);

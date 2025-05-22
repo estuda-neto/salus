@@ -17,10 +17,18 @@ import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
       username: 'root',
       password: 'root',
       database: 'test_db',
-      models: [Usuario, Empresa, Servico, EmpresaServico, ServicoUsuario, Disponibilidade, Compromisso],
+      models: [
+        Usuario,
+        Empresa,
+        Servico,
+        EmpresaServico,
+        ServicoUsuario,
+        Disponibilidade,
+        Compromisso,
+      ],
       autoLoadModels: true,
       synchronize: true,
     }),
   ],
 })
-export class DatabaseModule { }
+export class DatabaseModule {}

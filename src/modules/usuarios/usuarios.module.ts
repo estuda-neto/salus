@@ -11,7 +11,13 @@ import { TokensService } from './token.service';
 @Module({
   imports: [SequelizeModule.forFeature([Usuario])],
   controllers: [UsuariosController],
-  providers: [UsuariosService, AuthService, EmailsService, TokensService, UsuarioRepository],
-  exports: [UsuariosService]
+  providers: [
+    UsuariosService,
+    AuthService,
+    EmailsService,
+    TokensService,
+    UsuarioRepository,
+  ],
+  exports: [UsuariosService],
 })
-export class UsuariosModule { }
+export class UsuariosModule {}

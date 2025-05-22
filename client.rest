@@ -1,0 +1,26 @@
+
+@baseUrl = http://localhost:3000
+
+## -- Usuarios -- 
+
+### create usuario
+
+# @name create
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+
+{
+  "nome": "João Silva",
+  "cpf": "12345678901",
+  "email": "joao@email.com",
+  "password": "senha123",
+  "telefone": "11999999999",
+  "endereco": "Rua das Flores, 123",
+  "tipoUsuario": "admin"
+}
+
+### listar usuarios paginados
+
+# @name getPaginate
+GET {{baseUrl}}/usuarios/getAll/paginate?limit=10&offset=0
+

@@ -57,7 +57,9 @@ describe('BaseService', () => {
     const resultPromise = service.findOne(999);
 
     await expect(resultPromise).rejects.toThrow(ApiError);
-    await expect(resultPromise).rejects.toThrow('The resource sought with this identifier is not found in the application!');
+    await expect(resultPromise).rejects.toThrow(
+      'The resource sought with this identifier is not found in the application!',
+    );
   });
 
   it('should update an entity by id', async () => {
@@ -82,6 +84,8 @@ describe('BaseService', () => {
     const resultPromise = service.remove(999);
 
     await expect(resultPromise).rejects.toThrow(ApiError);
-    await expect(resultPromise).rejects.toThrow('The resource to be deleted, with that identifier is not found in the application!');
+    await expect(resultPromise).rejects.toThrow(
+      'The resource to be deleted, with that identifier is not found in the application!',
+    );
   });
 });

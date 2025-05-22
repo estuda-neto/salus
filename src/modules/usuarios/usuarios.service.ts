@@ -11,10 +11,13 @@ import { ApiError } from 'src/base/base.error';
 
 @Injectable()
 export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
-
   //injetamos e passmos UsuarioRepository, como extends Baserepository eleé um repository, então temos acesso
   //this.repository e this.usuariosRepository
-  constructor(private readonly usuariosRepository: UsuarioRepository, private readonly emailsService: EmailsService, private readonly tokensService: TokensService) {
+  constructor(
+    private readonly usuariosRepository: UsuarioRepository,
+    private readonly emailsService: EmailsService,
+    private readonly tokensService: TokensService,
+  ) {
     super(usuariosRepository);
   }
 
@@ -41,7 +44,12 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
          *  subject: string → O assunto do e-mail (exemplo: "Bem-vindo ao nosso serviço!").
          *  text: string → O corpo do e-mail em texto puro (sem formatação HTML).
          *  html?: string → (Opcional) O corpo do e-mail em formato HTML, permitindo estilização e formatação. */
-        this.emailsService.sendEmail(email, "Token para redefinição de senha", token, `um html "${token}"`);
+        this.emailsService.sendEmail(
+          email,
+          'Token para redefinição de senha',
+          token,
+          `um html "${token}"`,
+        );
       } catch (error) {
         throw new Error(`Deu pau:${error}`);
       }
@@ -69,8 +77,7 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
 
   public async listarPaginado(limit: number, offset: number): Promise<{ rows: Usuario[]; count: number }> {
     const objectWithUsuarios = await this.usuariosRepository.findWithPagination(limit, offset);
-    if (!objectWithUsuarios) throw new ApiError("Erro interno: o recurso não pôde ser recuperado!", 400, 'O limite ou offset está inválido');
+    if (!objectWithUsuarios) throw new ApiError('Erro interno: o recurso não pôde ser recuperado!', 400, 'O limite ou offset está inválido');
     return objectWithUsuarios;
-}
-
+  }
 }

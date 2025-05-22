@@ -9,6 +9,6 @@ import { EmpresasRepository } from './repository/empresasRepository';
   imports: [SequelizeModule.forFeature([Empresa])],
   controllers: [EmpresasController],
   providers: [EmpresasService, EmpresasRepository],
-  exports: [EmpresasService]
+  exports: [EmpresasService],
 })
-export class EmpresasModule { }
+export class EmpresasModule {}

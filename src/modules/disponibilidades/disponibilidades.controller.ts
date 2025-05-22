@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { DisponibilidadesService } from './disponibilidades.service';
 import { CreateDisponibilidadeDto } from './dto/create-disponibilidade.dto';
 import { UpdateDisponibilidadeDto } from './dto/update-disponibilidade.dto';
@@ -19,17 +19,17 @@ export class DisponibilidadesController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Disponibilidade | null> {
-    return this.disponibilidadesService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Disponibilidade | null> {
+    return this.disponibilidadesService.findOne(id);
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateDisponibilidadeDto: UpdateDisponibilidadeDto): Promise<[number, Disponibilidade[]]> {
-    return this.disponibilidadesService.update(+id, updateDisponibilidadeDto);
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updateDisponibilidadeDto: UpdateDisponibilidadeDto): Promise<[number, Disponibilidade[]]> {
+    return this.disponibilidadesService.update(id, updateDisponibilidadeDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<number> {
-    return this.disponibilidadesService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<number> {
+    return this.disponibilidadesService.remove(id);
   }
 }

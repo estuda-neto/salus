@@ -6,8 +6,10 @@ import { Disponibilidade } from '../entities/disponibilidade.entity';
 
 @Injectable()
 export class DisponibilidadesRepository extends BaseRepository<Disponibilidade> {
-
-  constructor(@InjectModel(Disponibilidade) private readonly disponibilidadeModel: typeof Disponibilidade) {
+  constructor(
+    @InjectModel(Disponibilidade)
+    private readonly disponibilidadeModel: typeof Disponibilidade,
+  ) {
     super(disponibilidadeModel);
   }
 

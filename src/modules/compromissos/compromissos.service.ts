@@ -5,7 +5,10 @@ import { CompromissosRepository } from './repository/compromissosRepository';
 import { CreateCompromissoDto } from './dto/create-compromisso.dto';
 
 @Injectable()
-export class CompromissosService extends BaseService<Compromisso, CreateCompromissoDto> {
+export class CompromissosService extends BaseService<
+  Compromisso,
+  CreateCompromissoDto
+> {
   constructor(private readonly compromissosRepository: CompromissosRepository) {
     super(compromissosRepository);
   }

@@ -1,4 +1,4 @@
-import { ApiError } from "../base.error";
+import { ApiError } from '../base.error';
 
 describe('ApiError', () => {
   it('should be an instance of Error', () => {

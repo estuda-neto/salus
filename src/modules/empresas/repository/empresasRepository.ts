@@ -5,8 +5,9 @@ import { Empresa } from '../entities/empresa.entity';
 
 @Injectable()
 export class EmpresasRepository extends BaseRepository<Empresa> {
-
-  constructor(@InjectModel(Empresa) private readonly empresaModel: typeof Empresa) {
+  constructor(
+    @InjectModel(Empresa) private readonly empresaModel: typeof Empresa,
+  ) {
     super(empresaModel);
   }
 

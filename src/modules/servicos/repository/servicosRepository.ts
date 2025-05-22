@@ -5,8 +5,9 @@ import { Servico } from '../entities/servico.entity';
 
 @Injectable()
 export class ServicosRepository extends BaseRepository<Servico> {
-
-  constructor(@InjectModel(Servico) private readonly servicoModel: typeof Servico) {
+  constructor(
+    @InjectModel(Servico) private readonly servicoModel: typeof Servico,
+  ) {
     super(servicoModel);
   }
 

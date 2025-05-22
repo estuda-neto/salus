@@ -1,8 +1,8 @@
-import { IsEmail, IsIn, IsString, Length } from "class-validator";
+import { IsEmail, IsIn, IsString, Length } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EmailResetDto {
-    @ApiProperty({ example: 'joao@email.com', description: 'Email válido' })
-    @IsEmail({}, { message: 'E-mail inválido.' })
-    email: string;
+  @ApiProperty({ example: 'joao@email.com', description: 'Email válido' })
+  @IsEmail({}, { message: 'E-mail inválido.' })
+  email: string;
 }
