@@ -1,5 +1,5 @@
 # salus
-Uma aplicação de agendamento de consultas e exames médicos.
+An application for scheduling appointments and medical examinations.
 
 ## Description
 

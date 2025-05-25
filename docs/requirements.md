@@ -8,11 +8,7 @@ A aplicação **Salus** será uma API backend desenvolvida com **Node.js**, **Ne
 
 - [ ] O sistema deve permitir o **cadastro de empresas de saúde** com dados como nome, CNPJ, endereço e contato.
 - [ ] Cada empresa deve possuir uma conta de usuário com o papel de **administrador (ADMIN)**.
-- [ ] O sistema deve permitir o cadastro de **usuários** com papéis distintos:
-  - ADMIN (administra a empresa)
-  - PROFISSIONAL (realiza atendimentos)
-  - PATIENT (realiza agendamentos)
-- [ ] O sistema deve utilizar **autenticação JWT** e **controle de permissões** baseado em roles.
+- [ ] O sistema deve verificar empresas e validar se são legitimas.
 
 ---
 
@@ -30,12 +26,9 @@ A aplicação **Salus** será uma API backend desenvolvida com **Node.js**, **Ne
 ## 3. Gestão de Profissionais e Serviços
 
 - [ ] O sistema deve permitir que cada profissional tenha um ou mais **serviços** associados (ex: Consulta Clínica, Exame de Sangue).
-- [ ] Cada serviço deve conter:
-  - Nome
-  - Duração
-  - Preço
-  - Especialidade
+- [ ] Cada serviço deve conter: Nome Duração Preço Especialidade.
 - [ ] Os profissionais devem ter **agendas com horários disponíveis**.
+- [ ] Os horaios disponiveis devem ser agendados pelo paciente também para realização de consultas...
 
 ---
 
