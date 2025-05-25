@@ -1,6 +1,15 @@
 # salus
 An application for scheduling appointments and medical examinations.
 
+## Badges
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=coverage)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=estuda-neto_salus&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=estuda-neto_salus)
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
