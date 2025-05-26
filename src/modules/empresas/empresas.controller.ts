@@ -3,6 +3,7 @@ import { EmpresasService } from './empresas.service';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { Empresa } from './entities/empresa.entity';
+import { UpdateStatusEmpresaDto } from './dto/update-status-empresa.dto';
 
 @Controller('empresas')
 export class EmpresasController {
@@ -31,5 +32,10 @@ export class EmpresasController {
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number): Promise<number> {
     return this.empresasService.remove(id);
+  }
+
+  @Patch(':id/status')
+  async updateStatus(@Param('id', ParseIntPipe) id: number, @Body() updateEmpresaDto: UpdateStatusEmpresaDto): Promise<[number, Empresa[]]> {
+    return this.empresasService.updateStatus(id, updateEmpresaDto);
   }
 }
