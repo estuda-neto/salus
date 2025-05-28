@@ -5,8 +5,6 @@ A aplicação **Salus** será uma API backend desenvolvida com **Node.js**, **Ne
 ---
 
 ## 1. Requisitos Gerais
-
-- [ ] O sistema deve permitir o **cadastro de empresas de saúde** com dados como nome, CNPJ, endereço e contato.
 - [ ] Cada empresa deve possuir uma conta de usuário com o papel de **administrador (ADMIN)**.
 - [ ] O sistema deve verificar empresas e validar se são legitimas.
 
@@ -14,10 +12,7 @@ A aplicação **Salus** será uma API backend desenvolvida com **Node.js**, **Ne
 
 ## 2. Gestão de Empresas e Usuários
 
-- [ ] Cada empresa poderá:
-  - Gerenciar seus profissionais.
-  - Cadastrar os serviços que oferece.
-  - Definir horários de atendimento (agendas).
+- [ ] Cada empresa poderá, Administrador: - Gerenciar seus profissionais. - Cadastrar os serviços que oferece. - Definir horários de atendimento (agendas).
 - [ ] O administrador da empresa pode criar e gerenciar usuários vinculados à empresa (PROFESSIONAL).
 - [ ] Pacientes poderão se cadastrar e agendar consultas com profissionais disponíveis.
 

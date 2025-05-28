@@ -1,33 +1,3 @@
-# 📘 Documento de Requisitos Melhorado — Sistema Salus
-
-A plataforma **Salus** é uma API backend destinada à gestão de agendamentos e serviços em empresas da área da saúde. Com base em padrões internacionais (como os dos EUA), a aplicação será desenvolvida com **NestJS**, **TypeScript**, **Sequelize** e **MySQL**.
-
----
-
-## 1. 🏢 Requisitos Gerais
-
-- Suporte a **multi-tenancy**: cada empresa (clínica, consultório, laboratório) possui ambiente isolado.
-- Cadastro de empresa deve incluir:
-  - Nome, CNPJ, descrição
-  - Endereço (validação via Google Maps API)
-  - Contato (telefone, e-mail, site)
-  - Logo e imagens (fachada, recepção)
-  - Status de validação: `PENDING`, `VERIFIED`, `REJECTED`
-- Empresas só poderão operar quando o status for `VERIFIED`.
-
-### 👥 Tipos de Usuário
-
-| Papel        | Função                                     |
-|--------------|--------------------------------------------|
-| `ADMIN`      | Gera convites, gerencia profissionais e serviços |
-| `PROFESSIONAL` | Recebe e gerencia atendimentos           |
-| `PATIENT`    | Realiza agendamentos                       |
-
-- Autenticação via **JWT**.
-- Autorização com **guards** baseados em `roles`.
-
----
-
 ## 2. 🏢 Gestão de Empresas
 
 ### ADMIN pode:

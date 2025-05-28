@@ -22,20 +22,13 @@ import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 import { ServicoUsuario } from './servico_usuario.entity';
 
 @Table({ tableName: 'tb_servicos', timestamps: true })
-export class Servico extends Model<
-  InferAttributes<Servico>,
-  InferCreationAttributes<Servico>
-> {
+export class Servico extends Model<InferAttributes<Servico>,InferCreationAttributes<Servico>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
   declare servicoId: CreationOptional<number>;
 
-  @Column({
-    type: DataType.DECIMAL(10, 2),
-    allowNull: false,
-    validate: { min: 0 },
-  })
+  @Column({type: DataType.DECIMAL(10, 2),allowNull: false,validate: { min: 0 }})
   declare valor: number;
 
   @Column({ type: DataType.INTEGER, allowNull: false, validate: { min: 1 } })
@@ -48,7 +41,7 @@ export class Servico extends Model<
   @BelongsToMany(() => Empresa, () => EmpresaServico)
   declare empresas: Empresa[];
 
-  //relationships servico <-> n x n com compromisso <->
+  //relationships servico <-> 1 x n com agendamento <->
   @ForeignKey(() => Compromisso)
   @Column
   declare compromissoId: number;

@@ -8,6 +8,7 @@ import { UsuarioRepository } from './repositories/usuarios.repository';
 import { EmailsService } from './emails.service';
 import { TokensService } from './token.service';
 import { ApiError } from 'src/base/base.error';
+import { fromString, TipoUsuario } from './utils/enums/tipousuario';
 
 @Injectable()
 export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
@@ -80,4 +81,16 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
     if (!objectWithUsuarios) throw new ApiError('Erro interno: o recurso não pôde ser recuperado!', 400, 'O limite ou offset está inválido');
     return objectWithUsuarios;
   }
+
+  public async getUsersOfType(tipoUsuario: string): Promise<Usuario[]> {
+    let tipo: TipoUsuario;
+    try {
+      tipo = fromString(tipoUsuario);
+    } catch (error) {
+      throw new ApiError('Tipo de usuário inválido.', 400, 'Tipo de usuário inválido. Valores válidos: admin, paciente, funcionario, profissional.');
+    }
+    return await this.usuariosRepository.buscarPorTipo(tipo);
+  }
+
+
 }

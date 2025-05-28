@@ -28,6 +28,7 @@ describe('UsuariosController', () => {
             findAll: jest.fn(),
             redefinirSenha: jest.fn(),
             remove: jest.fn(),
+            getUsersOfType:jest.fn(),
           },
         },
         {
@@ -148,5 +149,20 @@ describe('UsuariosController', () => {
 
     expect(result).toBe(1);
     expect(usuariosService.remove).toHaveBeenCalledWith(1);
+  });
+
+  it('should get all users of a given type', async () => {
+    const tipo = 'admin';
+    const users = [
+      { id: 1, nome: 'Admin User', tipoUsuario: tipo },
+      { id: 2, nome: 'Another Admin', tipoUsuario: tipo },
+    ];
+
+    jest.spyOn(usuariosService, 'getUsersOfType').mockResolvedValue(users as any);
+
+    const result = await controller.getAllUsers(tipo);
+
+    expect(result).toEqual(users);
+    expect(usuariosService.getUsersOfType).toHaveBeenCalledWith(tipo);
   });
 });

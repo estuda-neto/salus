@@ -1,32 +1,15 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  PrimaryKey,
-  AutoIncrement,
-  ForeignKey,
-  BelongsTo,
-  HasOne,
-} from 'sequelize-typescript';
-import {
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-} from 'sequelize';
-import { DisponibilidadeStatus } from '../enums/status';
+import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,ForeignKey,BelongsTo,HasOne} from 'sequelize-typescript';
+import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
+import { AgendamentoStatus } from '../enums/status';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
 
-@Table({ tableName: 'tb_disponibilidades', timestamps: true })
-export class Disponibilidade extends Model<
-  InferAttributes<Disponibilidade>,
-  InferCreationAttributes<Disponibilidade>
-> {
+@Table({ tableName: 'tb_agendamentos', timestamps: true })
+export class Agendamento extends Model<InferAttributes<Agendamento>,InferCreationAttributes<Agendamento>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
-  declare disponibilidadeId: CreationOptional<number>;
+  declare agendamentoId: CreationOptional<number>;
 
   @Column({ type: DataType.DATEONLY, allowNull: false })
   declare data: string;
@@ -34,11 +17,8 @@ export class Disponibilidade extends Model<
   @Column({ type: DataType.TIME, allowNull: false })
   declare hora: string;
 
-  @Column({
-    type: DataType.ENUM(...Object.values(DisponibilidadeStatus)),
-    allowNull: false,
-  })
-  declare status: DisponibilidadeStatus;
+  @Column({type: DataType.ENUM(...Object.values(AgendamentoStatus)),allowNull: false})
+  declare status: AgendamentoStatus;
 
   //relationships usuario <-> 1 x n com disponibilidade(agendamento) <->
   @ForeignKey(() => Usuario)
