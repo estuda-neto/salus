@@ -1,4 +1,4 @@
-import {Controller,Get,Post,Body,Patch,Param,Delete,UseGuards,Query,Put,ParseIntPipe} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Put, ParseIntPipe, BadRequestException } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -13,10 +13,11 @@ import { Roles } from './utils/decorators/roles.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ApiError } from 'src/base/base.error';
 import { ResetPasswordDto } from './dto/reset_password.dto';
+import { fromString, TipoUsuario } from './utils/enums/tipousuario';
 
 @Controller('usuarios')
 export class UsuariosController {
-  constructor(private readonly usuariosService: UsuariosService,private readonly authService: AuthService) { }
+  constructor(private readonly usuariosService: UsuariosService, private readonly authService: AuthService) { }
 
   // addBearerAuth swagger docs
   @ApiBearerAuth('jwt')
@@ -66,11 +67,17 @@ export class UsuariosController {
     return { usuarioId: redefinido };
   }
 
-  @Get('getAll/paginate')
+  @Get('get-all/paginate')
   async getPaginate(@Query('limit') limit: string = '10', @Query('offset') offset: string = '0'): Promise<{ rows: Usuario[]; count: number }> {
     const limitNumber = Number(limit);
     const offsetNumber = Number(offset);
     if (isNaN(limitNumber) || isNaN(offsetNumber)) throw new ApiError('Invalid query parameters, not numbers.', 400);
     return await this.usuariosService.listarPaginado(limitNumber, offsetNumber);
   }
+
+  @Get('get-all/typeof')
+  async getAllUsers(@Query('tipouser') tipouser: string): Promise<Usuario[]> {
+    return await this.usuariosService.getUsersOfType(tipouser);
+  }
+
 }

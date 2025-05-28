@@ -4,6 +4,7 @@ import { Usuario } from '../entities/usuario.entity';
 import { InferCreationAttributes } from 'sequelize';
 import { CreateUsuarioDto } from '../dto/create-usuario.dto';
 import { BaseRepository } from 'src/base/base.repository';
+import { TipoUsuario } from '../utils/enums/tipousuario';
 
 @Injectable()
 export class UsuarioRepository extends BaseRepository<Usuario> {
@@ -25,4 +26,10 @@ export class UsuarioRepository extends BaseRepository<Usuario> {
   async buscarTodos(): Promise<Usuario[]> {
     return this.findAll();
   }
+
+  async buscarPorTipo(tipo: TipoUsuario): Promise<Usuario[]> {
+  return await this.usuarioModel.findAll({
+    where: { tipoUsuario: tipo },
+  });
+}
 }

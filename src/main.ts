@@ -5,8 +5,14 @@ import { ValidationPipe } from '@nestjs/common';
 import { TransformErrorForHttpTypeInterceptor } from './base/base.interception';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true,transform:true }));
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: '*',
+      methods: '*',
+      allowedHeaders: '*',
+    },
+  });
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }));
 
   const config = new DocumentBuilder()
     .setTitle('Salus API')
@@ -34,6 +40,6 @@ async function bootstrap() {
     },
   });
   app.useGlobalInterceptors(new TransformErrorForHttpTypeInterceptor());
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3000);
 }
 void bootstrap();
