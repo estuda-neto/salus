@@ -86,7 +86,7 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
     let tipo: TipoUsuario;
     try {
       tipo = fromString(tipoUsuario);
-    } catch (error) {
+    } catch {
       throw new ApiError('Tipo de usuário inválido.', 400, 'Tipo de usuário inválido. Valores válidos: admin, paciente, funcionario, profissional.');
     }
     return await this.usuariosRepository.buscarPorTipo(tipo);

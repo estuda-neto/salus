@@ -7,9 +7,9 @@ import { ApiError } from 'src/base/base.error';
 
 @Injectable()
 export class EmailsService {
-  private transporter: Transporter;
+  private readonly transporter: Transporter;
 
-  constructor(private configService: ConfigService, private usuariosRepository: UsuarioRepository) {
+  constructor(private readonly configService: ConfigService, private readonly usuariosRepository: UsuarioRepository) {
     this.transporter = nodemailer.createTransport({
       host: this.getEmailhost(),
       port: Number(this.getEmailPort()),

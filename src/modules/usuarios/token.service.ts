@@ -10,8 +10,8 @@ export class TokensService {
   private static readonly IV_LENGTH = 12;
   private static readonly TAG_LENGTH = 16;
 
-  constructor(private configService: ConfigService) {
-    const envSecret = this.configService.get<string>('TOKEN_SECRET') || 'default_secret_32_bytes_long';
+  constructor(private readonly configService: ConfigService) {
+    const envSecret = this.configService.get<string>('TOKEN_SECRET') ?? 'default_secret_32_bytes_long';
     this.secretKey = Buffer.alloc(32); // 256 bits = 32 bytes
     const keyBytes = Buffer.from(envSecret, 'utf-8');
     keyBytes.copy(this.secretKey, 0, 0, Math.min(keyBytes.length, this.secretKey.length));
@@ -45,7 +45,7 @@ export class TokensService {
       
       const decrypted = Buffer.concat([decipher.update(encryptedData), decipher.final()]);
       return decrypted.toString('utf-8');
-    } catch (error) {
+    } catch {
       throw new ApiError('Error decrypting token', 500);
     }
   }

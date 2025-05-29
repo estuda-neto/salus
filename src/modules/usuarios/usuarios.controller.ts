@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Put, ParseIntPipe, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Put, ParseIntPipe } from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -13,7 +13,6 @@ import { Roles } from './utils/decorators/roles.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { ApiError } from 'src/base/base.error';
 import { ResetPasswordDto } from './dto/reset_password.dto';
-import { fromString, TipoUsuario } from './utils/enums/tipousuario';
 
 @Controller('usuarios')
 export class UsuariosController {

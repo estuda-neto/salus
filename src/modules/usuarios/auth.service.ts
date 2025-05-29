@@ -13,7 +13,7 @@ export class AuthService {
   private readonly JWT_SECRET: string;
   private readonly JWT_REFRESH_SECRET: string;
 
-  constructor(private configService: ConfigService,private readonly usuarioRepository: UsuarioRepository) {
+  constructor(private readonly configService: ConfigService,private readonly usuarioRepository: UsuarioRepository) {
     this.JWT_SECRET = this.configService.get<string>('JWT_SECRET') ?? '';
     this.JWT_REFRESH_SECRET = this.configService.get<string>('JWT_REFRESH_SECRET') ?? '';
   }
