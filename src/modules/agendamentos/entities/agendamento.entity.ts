@@ -1,11 +1,13 @@
-import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,ForeignKey,BelongsTo,HasOne} from 'sequelize-typescript';
-import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, ForeignKey, BelongsTo, HasOne, BelongsToMany } from 'sequelize-typescript';
+import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { AgendamentoStatus } from '../enums/status';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
-import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
+import { Servico } from 'src/modules/servicos/entities/servico.entity';
+import { Quadro } from 'src/modules/quadros/entities/quadro.entity';
+import { UsuarioAgendamento } from './usuarioagendamento.entity';
 
 @Table({ tableName: 'tb_agendamentos', timestamps: true })
-export class Agendamento extends Model<InferAttributes<Agendamento>,InferCreationAttributes<Agendamento>> {
+export class Agendamento extends Model<InferAttributes<Agendamento>, InferCreationAttributes<Agendamento>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -15,20 +17,33 @@ export class Agendamento extends Model<InferAttributes<Agendamento>,InferCreatio
   declare data: string;
 
   @Column({ type: DataType.TIME, allowNull: false })
-  declare hora: string;
+  declare horaInicio: string;
 
-  @Column({type: DataType.ENUM(...Object.values(AgendamentoStatus)),allowNull: false})
+  @Column({ type: DataType.TIME, allowNull: false })
+  declare horaFim: string;
+
+  @Column({ type: DataType.ENUM(...Object.values(AgendamentoStatus)), allowNull: false })
   declare status: AgendamentoStatus;
 
-  //relationships usuario <-> 1 x n com disponibilidade(agendamento) <->
-  @ForeignKey(() => Usuario)
+
+  //relationships usuario <-> n x n com Agendamento <->
+  @BelongsToMany(() => Usuario, () => UsuarioAgendamento)
+  usuarios: Usuario[];
+
+  //relationships servico <-> 1 x n com agendamentos <->
+  @ForeignKey(() => Servico)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  declare usuarioId: number;
+  declare servicoId: number;
 
-  @BelongsTo(() => Usuario)
-  declare usuario: Usuario;
+  @BelongsTo(() => Servico)
+  declare servico: Servico;
 
-  //relationships disponibilidade <-> 1 x 1 com compromisso <->
-  @HasOne(() => Compromisso)
-  declare compromissso: Compromisso;
+  //relationships quadro <-> 1 x n com agendamentos <->
+  @ForeignKey(() => Quadro)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  declare quadroId: number;
+
+  @BelongsTo(() => Quadro)
+  declare quadro: Quadro;
+
 }

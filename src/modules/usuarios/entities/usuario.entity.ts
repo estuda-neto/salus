@@ -1,14 +1,15 @@
-import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,BelongsTo,ForeignKey,HasMany,BelongsToMany} from 'sequelize-typescript';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, BelongsTo, ForeignKey, HasMany, BelongsToMany } from 'sequelize-typescript';
 import { TipoUsuario } from '../utils/enums/tipousuario';
-import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
+import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { ServicoUsuario } from 'src/modules/servicos/entities/servico_usuario.entity';
-import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
 import { Agendamento } from 'src/modules/agendamentos/entities/agendamento.entity';
+import { Preferencia } from 'src/modules/preferencias/entities/preferencia.entity';
+import { UsuarioAgendamento } from 'src/modules/agendamentos/entities/usuarioagendamento.entity';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
-export class Usuario extends Model<InferAttributes<Usuario>,InferCreationAttributes<Usuario>> {
+export class Usuario extends Model<InferAttributes<Usuario>, InferCreationAttributes<Usuario>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -43,15 +44,16 @@ export class Usuario extends Model<InferAttributes<Usuario>,InferCreationAttribu
   @BelongsTo(() => Empresa)
   declare empresa: Empresa;
 
-  //relationships usuario <-> 1 x n com agendamento <->
-  @HasMany(() => Agendamento)
-  declare agendamentos: Agendamento[];
+  //relationships usuario <-> n x n com agendamento <->
+  @BelongsToMany(() => Agendamento, () => UsuarioAgendamento)
+  agendamentos: Agendamento[];
 
   //relationships usuario <-> n x n com serviço <->
   @BelongsToMany(() => Servico, () => ServicoUsuario)
   declare servicos: Servico[];
 
-  //relationships usuario <-> 1 x n compromisso <->
-  @HasMany(() => Compromisso)
-  declare compromissos: Compromisso[];
+  //relationships usuario <-> 1 x n preferencias <->
+  @HasMany(() => Preferencia)
+  declare preferencias: Preferencia[];
+
 }

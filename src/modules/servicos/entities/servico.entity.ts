@@ -1,15 +1,11 @@
 import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, BelongsToMany, HasMany } from 'sequelize-typescript';
-import {
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-} from 'sequelize';
+import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
 import { TipoServico } from '../utils/enums/tiposervico';
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 import { EmpresaServico } from './empresa_servico.entity';
-import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 import { ServicoUsuario } from './servico_usuario.entity';
+import { Agendamento } from 'src/modules/agendamentos/entities/agendamento.entity';
 
 @Table({ tableName: 'tb_servicos', timestamps: true })
 export class Servico extends Model<InferAttributes<Servico>, InferCreationAttributes<Servico>> {
@@ -31,11 +27,11 @@ export class Servico extends Model<InferAttributes<Servico>, InferCreationAttrib
   @BelongsToMany(() => Empresa, () => EmpresaServico)
   declare empresas: Empresa[];
 
-  //relationships servico <-> 1 x n com compromisso <->
-  @HasMany(() => Compromisso)
-  declare compromissos: Compromisso[];
-
   //relationships usuario <-> n x n com serviço <->
   @BelongsToMany(() => Usuario, () => ServicoUsuario)
   declare usuarios: Usuario[];
+
+  //relationships servico <-> 1 x n com agendamentos <->
+  @HasMany(() => Agendamento)
+  declare agendamentos: Agendamento[];
 }

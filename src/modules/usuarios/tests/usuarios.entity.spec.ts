@@ -5,16 +5,7 @@ describe('Usuario - Entity', () => {
   const mockUsuario: Partial<Usuario> = {usuarioId: 1,nome: 'João',cpf: '12345678900',email: 'joao@email.com',password: 'senha123',telefone: '11999999999',endereco: 'Rua Teste',tipoUsuario: TipoUsuario.PACIENTE};
 
   it('must contain all expected attributes', () => {
-    const atributosEsperados = [
-      'usuarioId',
-      'nome',
-      'cpf',
-      'email',
-      'password',
-      'telefone',
-      'endereco',
-      'tipoUsuario',
-    ];
+    const atributosEsperados = ['usuarioId','nome','cpf','email','password','telefone','endereco','tipoUsuario'];
 
     for (const atributo of atributosEsperados) {
       expect(mockUsuario).toHaveProperty(atributo);

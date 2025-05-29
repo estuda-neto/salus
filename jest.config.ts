@@ -15,4 +15,12 @@ export default {
   }),
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: './coverage',
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    '/dist/',
+    '/coverage/',
+    '/coverage/lcov-report/',
+    '/migrations/',
+    '/test',
+  ],
 };

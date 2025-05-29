@@ -3,9 +3,10 @@ import { UsuariosModule } from './modules/usuarios/usuarios.module';
 import { EmpresasModule } from './modules/empresas/empresas.module';
 import { ServicosModule } from './modules/servicos/servicos.module';
 import { DatabaseModule } from './database/database.module';
-import { CompromissosModule } from './modules/compromissos/compromissos.module';
 import { ConfigModule } from '@nestjs/config';
 import { AgendamentosModule } from './modules/agendamentos/agendamentos.module';
+import { PreferenciasModule } from './modules/preferencias/preferencias.module';
+import { QuadrosModule } from './modules/quadros/quadros.module';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { AgendamentosModule } from './modules/agendamentos/agendamentos.module';
     UsuariosModule,
     EmpresasModule,
     ServicosModule,
-    CompromissosModule,
     AgendamentosModule,
     AgendamentosModule,
+    PreferenciasModule,
+    QuadrosModule,
   ],
   controllers: [],
   providers: [],

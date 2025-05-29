@@ -1,13 +1,14 @@
-import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,HasMany,BelongsToMany} from 'sequelize-typescript';
-import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
+import { Table, Column, Model, DataType, PrimaryKey, AutoIncrement, HasMany, BelongsToMany, ForeignKey, BelongsTo, HasOne } from 'sequelize-typescript';
+import { CreationOptional, InferAttributes, InferCreationAttributes } from 'sequelize';
 import { EmpresaStatus } from '../utils/enums/status';
 import { EstadosBrasileiros } from '../utils/enums/estadosbrasileiros';
 import { Usuario } from 'src/modules/usuarios/entities/usuario.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { EmpresaServico } from 'src/modules/servicos/entities/empresa_servico.entity';
+import { Quadro } from 'src/modules/quadros/entities/quadro.entity';
 
 @Table({ tableName: 'tb_empresas', timestamps: true })
-export class Empresa extends Model<InferAttributes<Empresa>,InferCreationAttributes<Empresa>> {
+export class Empresa extends Model<InferAttributes<Empresa>, InferCreationAttributes<Empresa>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -56,4 +57,13 @@ export class Empresa extends Model<InferAttributes<Empresa>,InferCreationAttribu
   //relationships empresa <-> n x n com serviços <->
   @BelongsToMany(() => Servico, () => EmpresaServico)
   declare servicos: Servico[];
+
+  //relationships quadro <-> 1 x 1 com empresa <->
+  @ForeignKey(() => Quadro)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  declare quadroId: number;
+
+  @BelongsTo(() => Quadro)
+  declare quadro: Quadro;
+
 }
