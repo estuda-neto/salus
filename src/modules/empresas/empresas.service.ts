@@ -13,6 +13,6 @@ export class EmpresasService extends BaseService<Empresa, CreateEmpresaDto> {
 
   async updateStatus(id: number, updateEmpresaDto: UpdateStatusEmpresaDto): Promise<[number, Empresa[]]> {
     const empresa = await this.findOne(id);
-    return await this.empresasRepository.update(id, updateEmpresaDto);
+    return await this.empresasRepository.update(empresa.empresaId, updateEmpresaDto);
   }
 }

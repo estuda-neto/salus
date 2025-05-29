@@ -1,15 +1,4 @@
-// empresa-servico.entity.ts
-import {
-  Table,
-  Column,
-  Model,
-  ForeignKey,
-  BelongsTo,
-  PrimaryKey,
-  AutoIncrement,
-  DataType,
-} from 'sequelize-typescript';
-import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
+import {Table,Column,Model,ForeignKey,BelongsTo,PrimaryKey,AutoIncrement,DataType,} from 'sequelize-typescript';
 import { Servico } from './servico.entity';
 import {
   CreationOptional,

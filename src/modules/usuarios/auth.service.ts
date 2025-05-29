@@ -10,8 +10,8 @@ import { ApiError } from 'src/base/base.error';
 
 @Injectable()
 export class AuthService {
-  private JWT_SECRET: string;
-  private JWT_REFRESH_SECRET: string;
+  private readonly JWT_SECRET: string;
+  private readonly JWT_REFRESH_SECRET: string;
 
   constructor(private configService: ConfigService,private readonly usuarioRepository: UsuarioRepository) {
     this.JWT_SECRET = this.configService.get<string>('JWT_SECRET') ?? '';

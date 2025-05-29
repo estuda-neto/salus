@@ -1,32 +1,14 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  PrimaryKey,
-  AutoIncrement,
-  BelongsTo,
-  ForeignKey,
-  HasMany,
-  BelongsToMany,
-} from 'sequelize-typescript';
+import {Table,Column,Model,DataType,PrimaryKey,AutoIncrement,BelongsTo,ForeignKey,HasMany,BelongsToMany} from 'sequelize-typescript';
 import { TipoUsuario } from '../utils/enums/tipousuario';
-import {
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-} from 'sequelize';
+import {CreationOptional,InferAttributes,InferCreationAttributes} from 'sequelize';
 import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
-import { Disponibilidade } from 'src/modules/disponibilidades/entities/disponibilidade.entity';
 import { Servico } from 'src/modules/servicos/entities/servico.entity';
 import { ServicoUsuario } from 'src/modules/servicos/entities/servico_usuario.entity';
 import { Compromisso } from 'src/modules/compromissos/entities/compromisso.entity';
+import { Agendamento } from 'src/modules/agendamentos/entities/agendamento.entity';
 
 @Table({ tableName: 'tb_usuarios', timestamps: true })
-export class Usuario extends Model<
-  InferAttributes<Usuario>,
-  InferCreationAttributes<Usuario>
-> {
+export class Usuario extends Model<InferAttributes<Usuario>,InferCreationAttributes<Usuario>> {
   @PrimaryKey
   @AutoIncrement
   @Column(DataType.INTEGER)
@@ -61,9 +43,9 @@ export class Usuario extends Model<
   @BelongsTo(() => Empresa)
   declare empresa: Empresa;
 
-  //relationships usuario <-> 1 x n com disponibilidade(agendamento) <->
-  @HasMany(() => Disponibilidade)
-  declare disponibilidades: Disponibilidade[];
+  //relationships usuario <-> 1 x n com agendamento <->
+  @HasMany(() => Agendamento)
+  declare agendamentos: Agendamento[];
 
   //relationships usuario <-> n x n com serviço <->
   @BelongsToMany(() => Servico, () => ServicoUsuario)
