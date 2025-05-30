@@ -9,4 +9,9 @@ export class PreferenciasService extends BaseService<Preferencia, CreatePreferen
   constructor(private readonly preferenciaRepository: PreferenciaRepository) {
     super(preferenciaRepository);
   }
+
+  async findAllPreferenciasOfUsuarioId(usuarioId: number): Promise<Preferencia[]> {
+    return this.preferenciaRepository.findAllPreferenciasOfUsuarioId(usuarioId);
+  }
+
 }

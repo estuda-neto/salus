@@ -23,6 +23,7 @@ describe('PreferenciasController', () => {
             findOne: jest.fn(),
             update: jest.fn(),
             remove: jest.fn(),
+            findAllPreferenciasOfUsuarioId: jest.fn(),
           },
         },
       ],
@@ -107,5 +108,23 @@ describe('PreferenciasController', () => {
 
     expect(result).toBe(1);
     expect(service.remove).toHaveBeenCalledWith(1);
+  });
+
+  it('deve retornar todas as preferências de um usuário', async () => {
+    const usuarioId = 1;
+    const preferenciasMock = [
+      {
+        preferenciaId: 1, diaSemana: 1, horaInicio: '08:00:00', horaFim: '12:00:00',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        usuarioId, quadroId: 1, usuario: {} as any, quadro: {} as any,
+      } as unknown as Preferencia,
+    ];
+
+    jest.spyOn(service, 'findAllPreferenciasOfUsuarioId').mockResolvedValue(preferenciasMock);
+
+    const result = await controller.findAllPreferenciasOfUsuarioId(usuarioId);
+    expect(result).toEqual(preferenciasMock);
+    expect(service.findAllPreferenciasOfUsuarioId).toHaveBeenCalledWith(usuarioId);
   });
 });

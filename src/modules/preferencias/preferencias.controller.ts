@@ -10,34 +10,40 @@ import { RolesGuard } from '../usuarios/utils/guards/roles.guard';
 
 @Controller('preferencias')
 export class PreferenciasController {
-  constructor(private readonly preferenciasService: PreferenciasService) {}
+  constructor(private readonly preferenciasService: PreferenciasService) { }
 
   // addBearerAuth swagger docs
-    @ApiBearerAuth('jwt')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles('admin')
-    @Get()
-    async findAll(): Promise<Preferencia[]> {
-      return this.preferenciasService.findAll();
-    }
-  
-    @Post()
-    async create(@Body() createPreferenciaDto: CreatePreferenciaDto): Promise<Preferencia> {
-      return await this.preferenciasService.create(createPreferenciaDto);
-    }
-  
-    @Get(':id')
-    async findOne(@Param('id', ParseIntPipe) id: number): Promise<Preferencia | null> {
-      return this.preferenciasService.findOne(id);
-    }
-  
-    @Patch(':id')
-    async update(@Param('id', ParseIntPipe) id: number, @Body() updatePreferenciaDto: UpdatePreferenciaDto): Promise<[number, Preferencia[]]> {
-      return this.preferenciasService.update(id, updatePreferenciaDto);
-    }
-  
-    @Delete(':id')
-    async remove(@Param('id', ParseIntPipe) id: number): Promise<number> {
-      return this.preferenciasService.remove(id);
-    }
+  @ApiBearerAuth('jwt')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @Get()
+  async findAll(): Promise<Preferencia[]> {
+    return this.preferenciasService.findAll();
+  }
+
+  @Post()
+  async create(@Body() createPreferenciaDto: CreatePreferenciaDto): Promise<Preferencia> {
+    return await this.preferenciasService.create(createPreferenciaDto);
+  }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Preferencia | null> {
+    return this.preferenciasService.findOne(id);
+  }
+
+  @Patch(':id')
+  async update(@Param('id', ParseIntPipe) id: number, @Body() updatePreferenciaDto: UpdatePreferenciaDto): Promise<[number, Preferencia[]]> {
+    return this.preferenciasService.update(id, updatePreferenciaDto);
+  }
+
+  @Delete(':id')
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<number> {
+    return this.preferenciasService.remove(id);
+  }
+
+  @Get('usuarios/:id')
+  async findAllPreferenciasOfUsuarioId(@Param('usuarioId', ParseIntPipe) usuarioId: number): Promise<Preferencia []> {
+    return this.preferenciasService.findAllPreferenciasOfUsuarioId(usuarioId);
+  }
+
 }

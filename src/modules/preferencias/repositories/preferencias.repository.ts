@@ -8,4 +8,8 @@ export class PreferenciaRepository extends BaseRepository<Preferencia> {
   constructor(@InjectModel(Preferencia) private readonly preferenciaModel: typeof Preferencia) {
     super(preferenciaModel);
   }
+  
+  async findAllPreferenciasOfUsuarioId(usuarioId: number): Promise<Preferencia[]> {
+    return this.preferenciaModel.findAll({ where: { usuarioId } });
+  }
 }
