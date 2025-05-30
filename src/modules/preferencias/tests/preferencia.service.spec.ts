@@ -18,6 +18,7 @@ describe('PreferenciasService', () => {
 
     const preferenciaRepositoryMock = {
         findAllPreferenciasOfUsuarioId: jest.fn(),
+        findByUsuarioIdsAndDateRange: jest.fn(),
     };
 
     beforeEach(async () => {
@@ -54,4 +55,18 @@ describe('PreferenciasService', () => {
         expect(preferenciaRepositoryMock.findAllPreferenciasOfUsuarioId).toHaveBeenCalledWith(123);
         expect(result).toEqual([]);
     })
+
+    it('should return preferencias by userIds and date range', async () => {
+        const usuarioIds = [42];
+        const startDate = new Date('2024-01-01T00:00:00Z');
+        const endDate = new Date('2024-01-02T00:00:00Z');
+
+        preferenciaRepositoryMock.findByUsuarioIdsAndDateRange.mockResolvedValue(mockPreferencias);
+
+        const result = await service.findByIdsAndDateRange(usuarioIds, startDate, endDate);
+
+        expect(preferenciaRepositoryMock.findByUsuarioIdsAndDateRange).toHaveBeenCalledWith(usuarioIds, startDate, endDate);
+        expect(result).toEqual(mockPreferencias);
+    });
+
 });

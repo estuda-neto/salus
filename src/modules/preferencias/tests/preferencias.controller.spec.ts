@@ -6,6 +6,7 @@ import { RolesGuard } from 'src/modules/usuarios/utils/guards/roles.guard';
 import { Preferencia } from '../entities/preferencia.entity';
 import { CreatePreferenciaDto } from '../dto/create-preferencia.dto';
 import { UpdatePreferenciaDto } from '../dto/update-preferencia.dto';
+import { BadRequestException } from '@nestjs/common';
 
 describe('PreferenciasController', () => {
   let controller: PreferenciasController;
@@ -24,6 +25,7 @@ describe('PreferenciasController', () => {
             update: jest.fn(),
             remove: jest.fn(),
             findAllPreferenciasOfUsuarioId: jest.fn(),
+            findByIdsAndDateRange: jest.fn(),
           },
         },
       ],
@@ -110,7 +112,7 @@ describe('PreferenciasController', () => {
     expect(service.remove).toHaveBeenCalledWith(1);
   });
 
-  it('deve retornar todas as preferências de um usuário', async () => {
+  it('should return all preferences of a user', async () => {
     const usuarioId = 1;
     const preferenciasMock = [
       {
@@ -126,5 +128,45 @@ describe('PreferenciasController', () => {
     const result = await controller.findAllPreferenciasOfUsuarioId(usuarioId);
     expect(result).toEqual(preferenciasMock);
     expect(service.findAllPreferenciasOfUsuarioId).toHaveBeenCalledWith(usuarioId);
+  });
+
+  it('should return preferences filtered by date and user list', async () => {
+    const ids = [1, 2];
+    const startDate = '2024-01-01T00:00:00Z';
+    const endDate = '2024-01-31T23:59:59Z';
+
+    const mockResult = [
+      {
+        preferenciaId: 1,
+        diaSemana: 1,
+        horaInicio: '08:00:00',
+        horaFim: '12:00:00',
+        createdAt: new Date(startDate),
+        updatedAt: new Date(endDate),
+        usuarioId: 1,
+        quadroId: 1,
+        usuario: null,
+        quadro: null,
+      } as unknown as Preferencia,
+    ];
+
+    jest.spyOn(service, 'findByIdsAndDateRange').mockResolvedValue(mockResult);
+
+    const result = await controller.getPreferencesByDate(ids, startDate, endDate);
+
+    expect(result).toEqual(mockResult);
+    expect(service.findByIdsAndDateRange).toHaveBeenCalledWith(ids, new Date(startDate), new Date(endDate));
+  });
+
+  it('should throw an exception if startDate or endDate are missing', async () => {
+    await expect(controller.getPreferencesByDate([1, 2], '', '2024-01-01')).rejects.toThrow(BadRequestException);
+
+    await expect(controller.getPreferencesByDate([1, 2], '2024-01-01', '')).rejects.toThrow(BadRequestException);
+  });
+
+  it('should throw an exception if startDate or endDate are invalid', async () => {
+    await expect(controller.getPreferencesByDate([1], 'data-invalida', '2024-01-01')).rejects.toThrow(BadRequestException);
+
+    await expect(controller.getPreferencesByDate([1], '2024-01-01', 'outra-invalida')).rejects.toThrow(BadRequestException);
   });
 });

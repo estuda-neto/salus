@@ -14,4 +14,8 @@ export class PreferenciasService extends BaseService<Preferencia, CreatePreferen
     return this.preferenciaRepository.findAllPreferenciasOfUsuarioId(usuarioId);
   }
 
+  async findByIdsAndDateRange(ids: number[], startDate: Date, endDate: Date): Promise<Preferencia[]> {
+    return this.preferenciaRepository.findByUsuarioIdsAndDateRange(ids, startDate, endDate);
+  }
+
 }

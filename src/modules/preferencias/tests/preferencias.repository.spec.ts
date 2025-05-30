@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
 import { Preferencia } from '../entities/preferencia.entity';
 import { PreferenciaRepository } from '../repositories/preferencias.repository';
+import { Op } from 'sequelize';
 
 describe('PreferenciaRepository', () => {
     let repository: PreferenciaRepository;
@@ -42,4 +43,28 @@ describe('PreferenciaRepository', () => {
         expect(preferenciaModelMock.findAll).toHaveBeenCalledWith({ where: { usuarioId: 42 } });
         expect(result).toEqual(mockPreferencias);
     });
+
+    it('should return preferencias filtered by usuarioIds and date range', async () => {
+        const usuarioIds = [42];
+        const startDate = new Date('2024-01-01T00:00:00Z');
+        const endDate = new Date('2024-01-02T00:00:00Z');
+
+        preferenciaModelMock.findAll.mockResolvedValue(mockPreferencias);
+
+        const result = await repository.findByUsuarioIdsAndDateRange(usuarioIds, startDate, endDate);
+
+        expect(preferenciaModelMock.findAll).toHaveBeenCalledWith({
+            where: {
+                usuarioId: {
+                    [Op.in]: usuarioIds,
+                },
+                [Op.or]: [{ createdAt: { [Op.between]: [startDate, endDate], }, }, {
+                    updatedAt: { [Op.between]: [startDate, endDate], },
+                },
+                ],
+            },
+        });
+        expect(result).toEqual(mockPreferencias);
+    });
+
 });
