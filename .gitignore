@@ -2,8 +2,7 @@
 /dist
 /node_modules
 /build
-/docs
-docs
+/docs/base.md
 
 # Logs
 logs

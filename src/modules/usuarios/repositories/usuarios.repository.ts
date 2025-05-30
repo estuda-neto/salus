@@ -8,9 +8,7 @@ import { TipoUsuario } from '../utils/enums/tipousuario';
 
 @Injectable()
 export class UsuarioRepository extends BaseRepository<Usuario> {
-  constructor(
-    @InjectModel(Usuario) private readonly usuarioModel: typeof Usuario,
-  ) {
+  constructor(@InjectModel(Usuario) private readonly usuarioModel: typeof Usuario) {
     super(usuarioModel);
   }
 
@@ -28,8 +26,13 @@ export class UsuarioRepository extends BaseRepository<Usuario> {
   }
 
   async buscarPorTipo(tipo: TipoUsuario): Promise<Usuario[]> {
-  return await this.usuarioModel.findAll({
-    where: { tipoUsuario: tipo },
-  });
-}
+    return await this.usuarioModel.findAll({
+      where: { tipoUsuario: tipo },
+    });
+  }
+
+  async findProfissionalsIdsByEmpresaIdAndTipoAdmin(empresaId: number): Promise<number[]> {
+    //corrigir  ou: TipoUsuarioEnum.PROFISSIONAL se usar enum
+    return this.usuarioModel.findAll({ where: { empresaId, tipoUsuario: 'profissional' }, attributes: ['usuarioId'], raw: true, }).then(results => results.map(r => r.usuarioId));
+  }
 }

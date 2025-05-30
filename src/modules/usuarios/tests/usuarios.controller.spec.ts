@@ -28,7 +28,8 @@ describe('UsuariosController', () => {
             findAll: jest.fn(),
             redefinirSenha: jest.fn(),
             remove: jest.fn(),
-            getUsersOfType:jest.fn(),
+            getUsersOfType: jest.fn(),
+            obterIdsProfissionaisPorEmpresa: jest.fn(),
           },
         },
         {
@@ -53,15 +54,7 @@ describe('UsuariosController', () => {
   });
 
   it('should create a user', async () => {
-    const dto: CreateUsuarioDto = {
-      nome: 'John',
-      email: 'john@mail.com',
-      password: '123',
-      cpf: '',
-      telefone: '',
-      endereco: '',
-      tipoUsuario: TipoUsuario.PACIENTE,
-    };
+    const dto: CreateUsuarioDto = { nome: 'John', email: 'john@mail.com', password: '123', cpf: '', telefone: '', endereco: '', tipoUsuario: TipoUsuario.PACIENTE };
 
     const usuario = { id: 1, ...dto };
     jest.spyOn(usuariosService, 'create').mockResolvedValue(usuario as any);
@@ -165,4 +158,17 @@ describe('UsuariosController', () => {
     expect(result).toEqual(users);
     expect(usuariosService.getUsersOfType).toHaveBeenCalledWith(tipo);
   });
+
+  it('should return professional IDs by company ID', async () => {
+    const empresaId = 123;
+    const profIdsMock = [10, 20, 30];
+
+    jest.spyOn(usuariosService, 'obterIdsProfissionaisPorEmpresa').mockResolvedValue(profIdsMock);
+
+    const result = await controller.listarIdsProfissionaisPorEmpresa(empresaId);
+
+    expect(usuariosService.obterIdsProfissionaisPorEmpresa).toHaveBeenCalledWith(empresaId);
+    expect(result).toEqual(profIdsMock);
+  });
+
 });

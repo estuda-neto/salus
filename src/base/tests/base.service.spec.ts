@@ -3,7 +3,6 @@ import { BaseRepository } from '../base.repository';
 import { BaseService } from '../base.service';
 import { ApiError } from '../base.error';
 
-// Mock Model de exemplo
 class MockModel extends Model {
   declare id: number;
   declare nome: string;

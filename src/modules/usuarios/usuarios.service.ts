@@ -9,6 +9,7 @@ import { EmailsService } from './emails.service';
 import { TokensService } from './token.service';
 import { ApiError } from 'src/base/base.error';
 import { fromString, TipoUsuario } from './utils/enums/tipousuario';
+import { EmpresasService } from '../empresas/empresas.service';
 
 @Injectable()
 export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
@@ -18,6 +19,7 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
     private readonly usuariosRepository: UsuarioRepository,
     private readonly emailsService: EmailsService,
     private readonly tokensService: TokensService,
+    private readonly empresasService: EmpresasService,
   ) {
     super(usuariosRepository);
   }
@@ -90,6 +92,11 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
       throw new ApiError('Tipo de usuário inválido.', 400, 'Tipo de usuário inválido. Valores válidos: admin, paciente, funcionario, profissional.');
     }
     return await this.usuariosRepository.buscarPorTipo(tipo);
+  }
+
+  async obterIdsProfissionaisPorEmpresa(empresaId: number): Promise<number[]> {
+    const empresa = await this.empresasService.findOne(empresaId);
+    return await this.usuariosRepository.findProfissionalsIdsByEmpresaIdAndTipoAdmin(empresa.empresaId);
   }
 
 

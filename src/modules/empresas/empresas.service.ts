@@ -15,4 +15,5 @@ export class EmpresasService extends BaseService<Empresa, CreateEmpresaDto> {
     const empresa = await this.findOne(id);
     return await this.empresasRepository.update(empresa.empresaId, updateEmpresaDto);
   }
+
 }

@@ -1,12 +1,5 @@
 import { of, throwError, firstValueFrom } from 'rxjs';
-import {
-  CallHandler,
-  ExecutionContext,
-  BadRequestException,
-  UnauthorizedException,
-  ForbiddenException,
-  NotFoundException,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, BadRequestException, UnauthorizedException, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { TransformErrorForHttpTypeInterceptor } from '../base.interception';
 import { ApiError } from '../base.error';
 
@@ -27,7 +20,7 @@ describe('TransformErrorForHttpTypeInterceptor', () => {
       }),
     } as unknown as ExecutionContext;
 
-    jest.spyOn(interceptor['logger'], 'error').mockImplementation(() => {});
+    jest.spyOn(interceptor['logger'], 'error').mockImplementation(() => { });
   });
 
   it('should transform ApiError with status 400 into BadRequestException', async () => {

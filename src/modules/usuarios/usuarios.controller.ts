@@ -79,4 +79,9 @@ export class UsuariosController {
     return await this.usuariosService.getUsersOfType(tipouser);
   }
 
+  @Get('empresa/:empresaId/profissionais-ids')
+  async listarIdsProfissionaisPorEmpresa(@Param('empresaId', ParseIntPipe) empresaId: number): Promise<number[]> {
+    return this.usuariosService.obterIdsProfissionaisPorEmpresa(empresaId);
+  }
+
 }

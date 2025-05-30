@@ -6,12 +6,15 @@ import { EmailsService } from '../emails.service';
 import { TokensService } from '../token.service';
 import { TipoUsuario } from '../utils/enums/tipousuario';
 import { ApiError } from 'src/base/base.error';
+import { EmpresasService } from '../../empresas/empresas.service';
+import { Empresa } from 'src/modules/empresas/entities/empresa.entity';
 
 describe('UsuariosService', () => {
   let service: UsuariosService;
   let usuariosRepository: jest.Mocked<UsuarioRepository>;
   let emailsService: jest.Mocked<EmailsService>;
   let tokensService: jest.Mocked<TokensService>;
+  let empresasService: jest.Mocked<EmpresasService>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,6 +28,7 @@ describe('UsuariosService', () => {
             update: jest.fn(),
             findWithPagination: jest.fn(),
             buscarPorTipo: jest.fn(),
+            findProfissionalsIdsByEmpresaIdAndTipoAdmin: jest.fn(),
           },
         },
         {
@@ -41,6 +45,12 @@ describe('UsuariosService', () => {
             decryptToken: jest.fn(),
           },
         },
+        {
+          provide: EmpresasService,
+          useValue: {
+            findOne: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
@@ -48,29 +58,31 @@ describe('UsuariosService', () => {
     usuariosRepository = module.get(UsuarioRepository);
     emailsService = module.get(EmailsService);
     tokensService = module.get(TokensService);
+    empresasService = module.get(EmpresasService);
   });
 
   it('should send email with token when user exists', async () => {
     const email = 'user@mail.com';
-    usuariosRepository.buscarPorEmail.mockResolvedValue({
-      id: 1,
-      email,
-    } as any);
+    usuariosRepository.buscarPorEmail.mockResolvedValue({ id: 1, email } as any);
     tokensService.generateToken.mockResolvedValue('token123');
 
     const result = await service.sendEmailWithHashResetPassword(email);
 
     expect(usuariosRepository.buscarPorEmail).toHaveBeenCalledWith(email);
     expect(tokensService.generateToken).toHaveBeenCalledWith(email);
-    expect(emailsService.sendEmail).toHaveBeenCalledWith(email, 'Token para redefinição de senha', 'token123', `um html "token123"`);
+    expect(emailsService.sendEmail).toHaveBeenCalledWith(
+      email,
+      'Token para redefinição de senha',
+      'token123',
+      `um html "token123"`,
+    );
     expect(result).toBe(true);
   });
 
   it('should return false when user does not exist', async () => {
     usuariosRepository.buscarPorEmail.mockResolvedValue(null);
 
-    const result =
-      await service.sendEmailWithHashResetPassword('notfound@mail.com');
+    const result = await service.sendEmailWithHashResetPassword('notfound@mail.com');
 
     expect(result).toBe(false);
     expect(emailsService.sendEmail).not.toHaveBeenCalled();
@@ -89,7 +101,7 @@ describe('UsuariosService', () => {
     jest.spyOn(bcrypt, 'genSalt').mockImplementation(async () => 'salt');
     jest.spyOn(bcrypt, 'hash').mockImplementation(async () => 'newhash');
 
-    usuariosRepository.update.mockResolvedValue([1, []]); // <-- retorno corrigido
+    usuariosRepository.update.mockResolvedValue([1, []]);
 
     const result = await service.redefinirSenha(token, email, password, repassword);
 
@@ -117,7 +129,10 @@ describe('UsuariosService', () => {
 
   it('should return users array when tipoUsuario is valid', async () => {
     const tipoValido = 'admin';
-    const usuariosMock = [{ id: 1, nome: 'Admin1', tipoUsuario: TipoUsuario.ADMIN }, { id: 2, nome: 'Admin2', tipoUsuario: TipoUsuario.ADMIN }];
+    const usuariosMock = [
+      { id: 1, nome: 'Admin1', tipoUsuario: TipoUsuario.ADMIN },
+      { id: 2, nome: 'Admin2', tipoUsuario: TipoUsuario.ADMIN },
+    ];
 
     (usuariosRepository.buscarPorTipo as jest.Mock).mockResolvedValue(usuariosMock);
 
@@ -131,8 +146,27 @@ describe('UsuariosService', () => {
     const tipoInvalido = 'invalido';
 
     await expect(service.getUsersOfType(tipoInvalido)).rejects.toThrow(ApiError);
-    await expect(service.getUsersOfType(tipoInvalido)).rejects.toMatchObject({ message: 'Tipo de usuário inválido.', status: 400 });
+    await expect(service.getUsersOfType(tipoInvalido)).rejects.toMatchObject({
+      message: 'Tipo de usuário inválido.',
+      status: 400,
+    });
+
     expect(usuariosRepository.buscarPorTipo).not.toHaveBeenCalled();
+  });
+
+  it('should return professional user IDs by company ID', async () => {
+    const empresaId = 123;
+    const empresaMock = { empresaId: 123, nome: 'Empresa X', cnpj: '00.000.000/0001-00', telefone: '0000-0000', imagens: [] } as unknown as Empresa;
+    const profIdsMock = [10, 20, 30];
+
+    empresasService.findOne.mockResolvedValue(empresaMock);
+    usuariosRepository.findProfissionalsIdsByEmpresaIdAndTipoAdmin.mockResolvedValue(profIdsMock);
+
+    const result = await service.obterIdsProfissionaisPorEmpresa(empresaId);
+
+    expect(empresasService.findOne).toHaveBeenCalledWith(empresaId);
+    expect(usuariosRepository.findProfissionalsIdsByEmpresaIdAndTipoAdmin).toHaveBeenCalledWith(empresaMock.empresaId);
+    expect(result).toEqual(profIdsMock);
   });
 
 });
