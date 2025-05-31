@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InferCreationAttributes } from 'sequelize';
 import * as bcrypt from 'bcrypt';
 import { Usuario } from './entities/usuario.entity';
@@ -16,10 +16,10 @@ export class UsuariosService extends BaseService<Usuario, CreateUsuarioDto> {
   //injetamos e passmos UsuarioRepository, como extends Baserepository eleé um repository, então temos acesso
   //this.repository e this.usuariosRepository
   constructor(
-    private readonly usuariosRepository: UsuarioRepository,
     private readonly emailsService: EmailsService,
     private readonly tokensService: TokensService,
-    private readonly empresasService: EmpresasService,
+    private readonly usuariosRepository: UsuarioRepository,
+    @Inject(forwardRef(() => EmpresasService)) private readonly empresasService: EmpresasService,
   ) {
     super(usuariosRepository);
   }
